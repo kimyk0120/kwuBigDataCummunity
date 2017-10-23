@@ -9,24 +9,18 @@
 		INSERT INTO member (id, password, email, mem_prt, name, img_nm, img_org_nm, agree_yn)
 		VALUES (#{id}, password(#{password}), #{email}, #{mem_prt}, #{name}, #{img_nm}, #{img_org_nm}, #{agree_yn})
 	
-	</insert>
+	</insert> -->
 
-	<select id="login_check" parameterType="CommonVo" resultType="int">
-		SELECT count(*)
-		FROM member
-		WHERE
-			id = #{id}
-			AND password = password(#{password})
+	<select id="lecture_list" parameterType="LectureVo" resultType="LectureVo">
+		SELECT LEC_NO, ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
+		FROM lecture		
 	</select>
 	
-	<select id="user_info" parameterType="CommonVo" resultType="CommonVo">
-	
+	<select id="lecture_list_count" resultType="int">	
 		SELECT
-			id, mem_prt, name, img_nm, img_org_nm
+			count(*)
 		FROM
-			member
-		WHERE
-			id = #{id}
-	</select> -->
+			lecture		
+	</select>
 
 </mapper>

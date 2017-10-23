@@ -13,6 +13,7 @@
 		<typeAlias type="com.sweetk.kwu.data.vo.DataVo" 			alias="DataVo"/>
 		<typeAlias type="com.sweetk.kwu.common.vo.CommonVo" 		alias="CommonVo"/>
 		<typeAlias type="com.sweetk.kwu.practice.vo.PracticeVo" 	alias="PracticeVo"/>
+		<typeAlias type="com.sweetk.kwu.lecture.vo.LectureVo" 	alias="LectureVo"/>
 	</typeAliases>
 	
 </configuration>

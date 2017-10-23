@@ -1,12 +1,13 @@
 package com.sweetk.kwu.lecture.mapper;
 
-import com.sweetk.kwu.common.vo.CommonVo;
+import java.util.ArrayList;
+
+import com.sweetk.kwu.lecture.vo.LectureVo;
 
 public interface LectureMapper {
-//	public void user_insert(CommonVo cvo);
-//	
-//	public int login_check(CommonVo cvo);
-//	
-//	public CommonVo user_info(CommonVo cvo);
+
+	public int lecture_list_count();	
+
+	public ArrayList<LectureVo> lecture_list(LectureVo lvo);
 	
 }

@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
-	<x>103</x>
-	<y>0</y>
+	<x>-144</x>
+	<y>511</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2017-09-04 16:16:56</creation_date>
-			<updated_date>2017-10-23 15:34:54</updated_date>
+			<updated_date>2017-10-23 17:45:43</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -5137,7 +5137,7 @@
 				<font_name>맑은 고딕</font_name>
 				<font_size>9</font_size>
 			<x>-82</x>
-			<y>768</y>
+			<y>756</y>
 			<color>
 				<r>128</r>
 				<g>128</g>

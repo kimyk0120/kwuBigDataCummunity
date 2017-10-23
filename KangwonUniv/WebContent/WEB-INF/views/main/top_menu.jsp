@@ -34,6 +34,8 @@
 	function go_login() {
 		location.href = "login.do";
 	}
+	
+	
 
 </script>
 </head>
@@ -76,7 +78,7 @@
                     <img src="./common/img/common/ellipse-2-copy-2.png" alt=""/></span>
                     <span class="snz-center-link" id="mainMenu3"><a href="javascript:go_menu('3')">실전문제</a></span> <span class="snz-center-bullet">
                     <img src="./common/img/common/ellipse-2-copy-2.png" alt=""/></span>
-                    <span class="snz-center-link" id="mainMenu4"><a href="/page/lec_list">강의</a></span>
+                    <span class="snz-center-link" id="mainMenu4"><a href="lecList.do">강의</a></span>
                     <span class="snz-center-link only-mobile-display"><a href="#"><img src="./common/img/common/logout.png" alt=""/> Logout</a></span>
                 </div>
             </div>

@@ -777,7 +777,7 @@ textarea::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0
 .snz-detail-content-section .detail-attachment {
     float: right;
 }
-.snz-detail-content-section .attachment-dropdown {
+.snz-detail-content-section .attachment-dropdown,#lecListSrch,.snz-nav-item {
     cursor: pointer;
 }
 .snz-detail-content-section .attachment-dropdown img {

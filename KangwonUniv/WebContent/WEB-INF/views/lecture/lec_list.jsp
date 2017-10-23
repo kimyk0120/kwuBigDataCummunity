@@ -15,49 +15,10 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container snz-page-header-container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed nav-collapse-mo" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="nav-collapse-mo-inner"></span>
-            </button>
-            <a class="navbar-brand" href="/">Service name</a>
-            <button type="button" class="navbar-toggle collapsed nav-search-mo nav-search-mo-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-                <a type="submit" class="nav-search-mo-inner"></a>
-            </button>
-        </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <div class="nav navbar-nav snz-header-link-center">
-                <div class="snz-header-link-center-inner">
-                    <span class="snz-center-link only-mobile-display"><a href="#"><img src="../../assets/img/common/user.png" alt=""><span class="hello-user-text">Hello, <i>GruData</i></span></a></span>
-                    <span class="snz-center-link"><a href="/page/info_list">정보창고</a></span> <span class="snz-center-bullet"><img
-                                src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="#">튜토리얼</a></span> <span class="snz-center-bullet"><img
-                                src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="/page/ques_list">실전문제</a></span> <span class="snz-center-bullet"><img
-                                src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="/page/lec_list">강의</a></span>
-                    <span class="snz-center-link only-mobile-display"><a href="#"><img src="../../assets/img/common/logout.png" alt=""> Logout</a></span>
-                </div>
-            </div>
-
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form-group">
-                    <span><img src="../../assets/img/common/shape-1.png" alt=""></span>
-                    <input type="text" class="form-control" placeholder="SEARCH">
-                </div>
-                <a type="submit"><img src="../../assets/img/main/shape-2.png" alt=""></a>
-            </form>
-        </div><!-- /.navbar-collapse -->
-        <div class="collapse navbar-collapse nav-search-mo-outer-toggle" id="bs-example-navbar-collapse-2">
-            <a type="submit" class="nav-search-mo nav-search-mo-inner-toggle"><img src="../../assets/img/common/search-inner.png" alt=""></a>
-            <input type="text" class="form-control" placeholder="Search">
-        </div>
-    </div><!-- /.container-fluid -->
-</nav>
+<jsp:include page="../main/top_menu.jsp"  />
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set> 
 
 <div class="container-fluid snz-page-container">
     <div class="container snz-page-container-inner">
@@ -65,35 +26,36 @@
             <h1>강의</h1>
         </div>
         <div class="row snz-page-nav lec-page-nav">
-            <span class="snz-nav-item current"><a href="#">전체</a></span>
-            <span class="snz-nav-item"><a href="#">내강의</a></span>
+            <span class="snz-nav-item current"><a>전체</a></span>
+            <span class="snz-nav-item"><a>내강의</a></span>
 
             <div class="snz-subnav-search">
                 <form class="navbar-form navbar-right" role="search">
                     <span>강의년도</span>
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">2017</span>
+                            <span class="selected-item">${sysYear}</span>
                             <span class="caret lec-caret"></span>
                         </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="dropdownMenu1List">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2017</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2016</a></li>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="dropdownMenu1List">                        	
+                        	<c:forEach var="i" begin="0" end="4" varStatus="stat" step="1">                        	
+                            	<li role="presentation" class="lecYear"><a role="menuitem" tabindex="-1" >${sysYear-i}</a></li>
+                        	</c:forEach>                            
                         </ul>
                     </div>
                     <span>학기</span>
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">1학기</span>
+                            <span class="selected-item">1학기</span>                            
                             <span class="caret lec-caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2" id="dropdownMenu2List">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1학기</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2학기</a></li>
+                            <li role="presentation" class="lecSemester"><a role="menuitem" tabindex="-1" >1학기</a></li>
+                            <li role="presentation" class="lecSemester"><a role="menuitem" tabindex="-1" >2학기</a></li>
                         </ul>
                     </div>
 
-                    <a href="#"><img src="../../assets/img/page/shape-2.png" alt=""></a> <!-- submit 제거 -->
+                    <a id="lecListSrch"><img src="../../assets/img/page/shape-2.png" alt=""></a> <!-- submit 제거 -->
                 </form>
             </div>
 
@@ -119,7 +81,41 @@
             </tr>
             </thead>
             <tbody>
-
+			
+			
+			<tr>
+                <td class="only-desktop-display"><span class="">2016</span></td>
+                <td class="only-desktop-display"><span class="">2학년</span></td>
+                <td class="only-desktop-display"><span class="">1학기</span></td>
+                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
+                <td class="body-lecture-title">
+                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
+                    <div class="lec-mobile-layout">
+                        <div class="lec-mobile-layout-top">
+                            <span class="">컴퓨터 개론 및 실습</span>
+                            <span class="body-attend lec-mobile-attend-o">수강중</span>
+                        </div>
+                        <div class="lec-mobile-layout-bottom">
+                            <span class="">2017</span>
+                            <span class="">2학년</span>
+                            <span class="">1학기</span>
+                            <span class="">ㆍ</span>
+                            <span class="">데이터 분석 전공</span>
+                            <span class="lec-mobile-number">
+                            <span>15명</span>
+                        </span>
+                        </div>
+                    </div>
+                </td>
+                <td class="only-desktop-display"><span><a href="#"><img src="../../assets/img/page/shape-718.png" alt=""></a></span></td>
+                <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
+                <td><span class="body-attend only-desktop-display">수강중</span></td>
+            </tr>
+			
+			
+			
+			
+			<!-- ex tr -->
             <tr>
                 <td class="only-desktop-display"><span class="">2016</span></td>
                 <td class="only-desktop-display"><span class="">2학년</span></td>
@@ -409,18 +405,62 @@
                 <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
                 <td><span class="body-attend only-desktop-display">수강중</span></td>
             </tr>
+            <!-- .ex tr -->
 
             </tbody>
         </table>
 
     </div>
 </div>
-</div>
+<!-- </div> -->
+
 <div class="snz-modal-layer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="../../assets/lib/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 <script src="https://use.fontawesome.com/f0cba26d23.js"></script>
 <script src="../../assets/js/script.js"></script>
+<script type="text/javascript">
+	
+	// 전체 강의, 내강의 선택 css
+	$(".snz-nav-item").on("click",function(){					
+		if(!$(this).hasClass("current")){
+			$(".snz-nav-item").removeClass("current");
+			$(this).addClass("current");
+		}
+	})
+	
+	// 검색 년도 선택시 변경 css
+	$(".lecYear").on("click",function(){
+		var selectYear = $(this).children("a").text();
+		//console.log("selectYear : " + selectYear);
+		$("#dropdownMenu1 span.selected-item").html(selectYear);
+	})
+	
+	// 학기 선택시 변경 css
+	$(".lecSemester").on("click",function(){
+		var selectSemester = $(this).children("a").text();
+		//console.log("selectSemester : " + selectSemester);
+		$("#dropdownMenu2 span.selected-item").html(selectSemester);
+	})
+	
+	// 검색 버튼 선택 
+	$("#lecListSrch").on("click",function(){
+		var selectYear = $("#dropdownMenu1 span.selected-item").text();
+		var selectSemester = $("#dropdownMenu2 span.selected-item").text();
+		
+		if(selectSemester == "1학기"){ selectSemester = "1"; }else{ selectSemester = "2"; }
+		
+		console.log("selectYear : " + selectYear);
+		console.log("selectSemester : " + selectSemester);
+	})
+	
+	
+		
+	function testMsg(msg){
+		console.log("msg : " + msg);
+	}
+	
+</script>
 </body>
 </html>
