@@ -12,7 +12,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@Controller("LectureController")
 public class LectureController {
 	
 	Logger log = Logger.getLogger(LectureController.class);
@@ -24,12 +24,20 @@ public class LectureController {
     @Autowired 
     private PlatformTransactionManager transactionManager;
 	
-	@RequestMapping("/lecture_list.do")
+    
+    // 강의 리스트 FIXME 
+	@RequestMapping("/lecList.do")
 	protected ModelAndView main_page(HttpServletRequest req, HttpSession session, HttpServletResponse response) {
+		
 		ModelAndView mav = new ModelAndView("/lecture/lec_list");
-			
+		
+		
+		
+		
+		
 		return mav;
 	}
+	
 	
 	
 }//.class
