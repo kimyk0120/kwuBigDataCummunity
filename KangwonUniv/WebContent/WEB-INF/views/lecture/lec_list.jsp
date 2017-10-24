@@ -55,15 +55,15 @@
                             <li role="presentation" class="lecSemester"><a role="menuitem" tabindex="-1" >2학기</a></li>
                         </ul>
                     </div>
-
                     <a id="lecListSrch"><img src="../../assets/img/page/shape-2.png" alt=""></a> <!-- submit 제거 -->
                 </form>
             </div>
 
         </div>
     </div>
-</div><div class="container-fluid snz-page-content-container">
+</div>
 
+<div class="container-fluid snz-page-content-container">
     <div class="row snz-page-content snz-page-lec-section snz-page-lec-list-section">
         <div class="snz-add-btn">
             <a href="#"><img src="../../assets/img/page/shape-1223-copy.png" alt=""></a>
@@ -93,15 +93,8 @@
                 <td class="body-lecture-title"><span class="only-desktop-display">${ll.lec_cors}</span></td>                    
                 <td class="only-desktop-display"><span><a href="#"><img src="../../assets/img/page/shape-718.png" alt=""></a></span></td>
                 <td class="body-lecture-number only-desktop-display"><span>${ll.stdtcnt}명</span></td>
-                <td>                
-                	<c:choose>
-                		<c:when test="${ll.attndYn eq null or ll.attndYn eq ''}">
-                			<span class="only-desktop-display">미수강</span>
-                		</c:when>
-                		<c:otherwise>
-                			<span class="body-attend only-desktop-display">수강중</span>
-                		</c:otherwise>
-                	</c:choose>
+                <td>              
+                	<span class="only-desktop-display ${ll.attndYn == '수강중' ? 'body-attend' : ''}" >${ll.attndYn}</span>           			
                 </td>
             </tr>
 			</c:forEach>
@@ -127,15 +120,44 @@
 <script type="text/javascript">
 
 	var pageNum = $("#pageNum").val();
-	console.log("pageNum : " + pageNum);
+	var selectYear;
+	var selectSemester;
+	var flag;
+	//console.log("pageNum : " + pageNum);
 	
-	// 전체 강의, 내강의 선택 css
-	$(".snz-nav-item").on("click",function(){					
+	// 전체 강의, 내강의 선택 css, ajax
+	$(".snz-nav-item").on("click",function(){	
+		flag =  $(this).children("a").text();		
+		
 		if(!$(this).hasClass("current")){
 			$(".snz-nav-item").removeClass("current");
 			$(this).addClass("current");
 		}
-	})
+		
+		if(flag == "전체"){			
+			pageReset();			
+			setSearchYearSemester();
+			$.ajax({
+				url: "lecList.ajax",
+				type: "GET",
+				data : {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester},
+				success:function(result){
+					$(".table.ques-8-table.lec-table > tbody").html(result);
+				}
+			})//.ajax
+		}else{ // 내강의
+			pageReset();			
+			setSearchYearSemester();
+			$.ajax({
+				url: "mylecList.ajax",
+				type: "GET",
+				data : {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester},
+				success:function(result){
+					$(".table.ques-8-table.lec-table > tbody").html(result);
+				}
+			})//.ajax
+		}//.else	
+	})//.전체 강의, 내강의 선택 css, ajax
 	
 	// 검색 년도 선택시 변경 css
 	$(".lecYear").on("click",function(){
@@ -153,24 +175,46 @@
 	
 	// 검색 버튼 선택 
 	$("#lecListSrch").on("click",function(){
-		var selectYear = $("#dropdownMenu1 span.selected-item").text();
-		var selectSemester = $("#dropdownMenu2 span.selected-item").text();
+		setSearchYearSemester();
 		
-		if(selectSemester == "1학기"){ selectSemester = "1"; }else{ selectSemester = "2"; }
-		
-		console.log("selectYear : " + selectYear);
-		console.log("selectSemester : " + selectSemester);
 	})
 	
 	// 더보기 버튼 선택시
 	$(".ques-8-table-more").on("click",function(){
-		testMsg("더보기 버튼 선택");
-				
-	})
+		//testMsg("더보기 버튼 선택");
+		pageNum ++;
+		$("#pageNum").val(pageNum);
+		setSearchYearSemester();
+		
+		/* console.log("selectYear : " + selectYear);
+		console.log("selectSemester : " + selectSemester); */
+		//console.log("pageNum : " + pageNum);				
+		$.ajax({
+			url: "lecList.ajax",
+			type: "GET",
+			data : {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester},
+			success:function(result){
+				$(".table.ques-8-table.lec-table > tbody").append(result);
+			}
+		})//.ajax 
+	})//.더보기
 	
 		
+	// func	
 	function testMsg(msg){
 		console.log("msg : " + msg);
+	}
+	
+	function setSearchYearSemester(){
+		selectYear = $("#dropdownMenu1 span.selected-item").html();
+		selectSemester = $("#dropdownMenu2 span.selected-item").html();
+		selectSemester = selectSemester.replace(/[^0-9]/g,"");
+		console.log( this.selectYear + ", " + this.selectSemester );
+	}
+	
+	function pageReset(){
+		$("#pageNum").val("0");
+		pageNum = $("#pageNum").val();
 	}
 	
 </script>

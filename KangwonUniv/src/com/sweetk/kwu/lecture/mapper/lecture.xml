@@ -7,18 +7,24 @@
 
 	<!-- <insert id="user_insert" parameterType="CommonVo">
 		INSERT INTO member (id, password, email, mem_prt, name, img_nm, img_org_nm, agree_yn)
-		VALUES (#{id}, password(#{password}), #{email}, #{mem_prt}, #{name}, #{img_nm}, #{img_org_nm}, #{agree_yn})
-	
+		VALUES (#{id}, password(#{password}), #{email}, #{mem_prt}, #{name}, #{img_nm}, #{img_org_nm}, #{agree_yn})	
 	</insert> -->
 
-	<select id="lecture_list" parameterType="LectureVo" resultType="LectureVo">				
-		
+	<select id="lecture_list" parameterType="LectureVo" resultType="LectureVo">
+	
+	<![CDATA[						
 		SELECT a.LEC_NO, a.ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
-		,(Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO) as stdtcnt
-		,(Select b.id from lec_stdt b where a.LEC_NO = b.LEC_NO and b.id = '${loginId}' ) as attndYn
+		,(Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO) as stdtcnt		
+		,case when DATE_FORMAT(now(), "%y-%m-%d") < START_DT then '수강전' 
+		  when DATE_FORMAT(now(), "%y-%m-%d")>END_DT then '강의완료' 
+		  else if((Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO and b.id = '${loginId}' )>0,"수강중","미수강")
+		end
+		as attndYn
+	]]>
 		FROM lecture a		
 		WHERE a.YEAR = ${year} AND TERM = ${term}
 		LIMIT ${currentPage},${pageSize}
+		
 	</select>
 	
 	<select id="lecture_list_count" resultType="int">	

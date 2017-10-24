@@ -24,13 +24,33 @@ public class LectureVo {
 	private String del_yn = "";
 	
 	private int stdtcnt;
-	
-	private String attndYn = "";
-	
+	private String attndYn = "";	
 	private String loginId = "";
 	
+	private String selectSemester = "";
+	private String selectYear = "";
 	
-	
+	@Override
+	public String toString() {
+		return "LectureVo [pageSize=" + pageSize + ", currentPage=" + currentPage + ", lec_no=" + lec_no + ", id=" + id
+				+ ", lec_title=" + lec_title + ", lec_cors=" + lec_cors + ", lec_plan=" + lec_plan + ", start_dt="
+				+ start_dt + ", end_dt=" + end_dt + ", year=" + year + ", grade=" + grade + ", term=" + term
+				+ ", reg_id=" + reg_id + ", reg_dt=" + reg_dt + ", del_yn=" + del_yn + ", stdtcnt=" + stdtcnt
+				+ ", attndYn=" + attndYn + ", loginId=" + loginId + ", selectSemester=" + selectSemester
+				+ ", selectYear=" + selectYear + "]";
+	}
+	public String getSelectSemester() {
+		return selectSemester;
+	}
+	public void setSelectSemester(String selectSemester) {
+		this.selectSemester = selectSemester;
+	}
+	public String getSelectYear() {
+		return selectYear;
+	}
+	public void setSelectYear(String selectYear) {
+		this.selectYear = selectYear;
+	}
 	public int getPageSize() {
 		return pageSize;
 	}
@@ -139,12 +159,5 @@ public class LectureVo {
 	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
-	
-	
-
-	
-	
-	
-	
-	
+		
 }//.class
