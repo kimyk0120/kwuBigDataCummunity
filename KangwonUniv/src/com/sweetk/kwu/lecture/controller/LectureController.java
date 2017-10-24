@@ -85,14 +85,12 @@ public class LectureController {
     			//pvo.setStartRow(startRow);
     			//pvo.setEndRow(pageSize);
     			list = mapper.lecture_list(lvo);
-    			
-    			//for(LectureVo vo : list){ System.out.println(vo.toString());}
-    				
+    			    			    				
     		} else {
     			list = null;
     		}
 			
-//			mav.addObject("list", list);
+			mav.addObject("list", list);
 //			mav.addObject("srch", pvo);
 //	    	mav.addObject("currentPage", currentPage);
 //			mav.addObject("startRow", startRow);

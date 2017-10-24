@@ -82,36 +82,18 @@
             </thead>
             <tbody>
 			
-			
-			<tr>
-                <td class="only-desktop-display"><span class="">2016</span></td>
-                <td class="only-desktop-display"><span class="">2학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend lec-mobile-attend-o">수강중</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2017</span>
-                            <span class="">2학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                            <span>15명</span>
-                        </span>
-                        </div>
-                    </div>
-                </td>
+			<c:forEach items="${list}" var="ll" varStatus="status">			
+			<tr>				
+                <td class="only-desktop-display"><span class="">${ll.year}</span></td>
+                <td class="only-desktop-display"><span class="">${ll.grade}학년</span></td>
+                <td class="only-desktop-display"><span class="">${ll.term}학기</span></td>
+                <td class="only-desktop-display"><span class="">${ll.lec_title}</span></td>
+                <td class="body-lecture-title"><span class="only-desktop-display">${ll.lec_cors}</span></td>                    
                 <td class="only-desktop-display"><span><a href="#"><img src="../../assets/img/page/shape-718.png" alt=""></a></span></td>
                 <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
                 <td><span class="body-attend only-desktop-display">수강중</span></td>
             </tr>
-			
+			</c:forEach>
 			
 			
 			

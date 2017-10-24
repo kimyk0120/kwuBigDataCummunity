@@ -1,6 +1,11 @@
 /* Import */
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+.table.ques-8-table.lec-table tr:HOVER{
+	cursor: pointer;
+}
+
+
 /* Bootstrap */
 .container {
     width:1365px;

@@ -1,7 +1,7 @@
 (function($) {
 
 	$.datepicker.setDefaults({
-        dateFormat: 'yy.mm.dd',
+        dateFormat: 'yy-mm-dd',
         prevText: '이전 달',
         nextText: '다음 달',
         monthNames: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
