@@ -5,17 +5,12 @@ public class LectureVo {
 	//LEC_NO, ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
 	
 	// paging
-	private int startRow;
-	private int endRow;
-	
-	private String row_num = null;
-	private String pageNum = null;
-	private String page	= null;
-	
+	int pageSize = 10;
+	int currentPage = 0;
 	
 	// lecture fields
 	private int lec_no;
-	private String id = "";
+	private String id = ""; // 강사 아이디
 	private String lec_title = "";
 	private String lec_cors = "";
 	private String lec_plan = "";
@@ -28,7 +23,44 @@ public class LectureVo {
 	private String reg_dt = "";
 	private String del_yn = "";
 	
+	private int stdtcnt;
 	
+	private String attndYn = "";
+	
+	private String loginId = "";
+	
+	
+	
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+	public String getLoginId() {
+		return loginId;
+	}
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
+	public String getAttndYn() {
+		return attndYn;
+	}
+	public void setAttndYn(String attndYn) {
+		this.attndYn = attndYn;
+	}
+	public int getStdtcnt() {
+		return stdtcnt;
+	}
+	public void setStdtcnt(int stdtcnt) {
+		this.stdtcnt = stdtcnt;
+	}
 	public int getLec_no() {
 		return lec_no;
 	}
@@ -107,46 +139,9 @@ public class LectureVo {
 	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
-	public int getStartRow() {
-		return startRow;
-	}
-	public void setStartRow(int startRow) {
-		this.startRow = startRow;
-	}
-	public int getEndRow() {
-		return endRow;
-	}
-	public void setEndRow(int endRow) {
-		this.endRow = endRow;
-	}
-	public String getRow_num() {
-		return row_num;
-	}
-	public void setRow_num(String row_num) {
-		this.row_num = row_num;
-	}
-	public String getPageNum() {
-		return pageNum;
-	}
-	public void setPageNum(String pageNum) {
-		this.pageNum = pageNum;
-	}
-	public String getPage() {
-		return page;
-	}
-	public void setPage(String page) {
-		this.page = page;
-	}
 	
 	
-	@Override
-	public String toString() {
-		return "LectureVo [startRow=" + startRow + ", endRow=" + endRow + ", row_num=" + row_num + ", pageNum="
-				+ pageNum + ", page=" + page + ", lec_no=" + lec_no + ", id=" + id + ", lec_title=" + lec_title
-				+ ", lec_cors=" + lec_cors + ", lec_plan=" + lec_plan + ", start_dt=" + start_dt + ", end_dt=" + end_dt
-				+ ", year=" + year + ", grade=" + grade + ", term=" + term + ", reg_id=" + reg_id + ", reg_dt=" + reg_dt
-				+ ", del_yn=" + del_yn + "]";
-	}
+
 	
 	
 	

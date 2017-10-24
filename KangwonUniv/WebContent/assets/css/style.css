@@ -1518,6 +1518,7 @@ textarea::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0
     background-color: #f5f6fa;
     margin-left: -40px;
     margin-right: -40px;
+    cursor: pointer;
 }
 .ques-8-table-more .more-trigger {
     font-size: 14px;

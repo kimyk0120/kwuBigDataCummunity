@@ -19,6 +19,7 @@
 <jsp:include page="../main/top_menu.jsp"  />
 <c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set> 
+<input type="hidden" value="${pageNum}" id="pageNum">
 
 <div class="container-fluid snz-page-container">
     <div class="container snz-page-container-inner">
@@ -82,6 +83,7 @@
             </thead>
             <tbody>
 			
+			<!-- 강의 리스트 -->
 			<c:forEach items="${list}" var="ll" varStatus="status">			
 			<tr>				
                 <td class="only-desktop-display"><span class="">${ll.year}</span></td>
@@ -90,308 +92,28 @@
                 <td class="only-desktop-display"><span class="">${ll.lec_title}</span></td>
                 <td class="body-lecture-title"><span class="only-desktop-display">${ll.lec_cors}</span></td>                    
                 <td class="only-desktop-display"><span><a href="#"><img src="../../assets/img/page/shape-718.png" alt=""></a></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
-                <td><span class="body-attend only-desktop-display">수강중</span></td>
+                <td class="body-lecture-number only-desktop-display"><span>${ll.stdtcnt}명</span></td>
+                <td>                
+                	<c:choose>
+                		<c:when test="${ll.attndYn eq null or ll.attndYn eq ''}">
+                			<span class="only-desktop-display">미수강</span>
+                		</c:when>
+                		<c:otherwise>
+                			<span class="body-attend only-desktop-display">수강중</span>
+                		</c:otherwise>
+                	</c:choose>
+                </td>
             </tr>
 			</c:forEach>
-			
-			
-			
-			<!-- ex tr -->
-            <tr>
-                <td class="only-desktop-display"><span class="">2016</span></td>
-                <td class="only-desktop-display"><span class="">2학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend lec-mobile-attend-o">수강중</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2017</span>
-                            <span class="">2학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                            <span>15명</span>
-                        </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><a href="#"><img src="../../assets/img/page/shape-718.png" alt=""></a></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
-                <td><span class="body-attend only-desktop-display">수강중</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2017</span></td>
-                <td class="only-desktop-display"><span class="">1학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">확률 및 통계</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">확률 및 통계</span>
-                            <span class="body-attend lec-mobile-attend-x">미수강</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2017</span>
-                            <span class="">1학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>30명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><a href="#"><img src="../../assets/img/page/shape-718.png" alt=""></a></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>30명</span></td>
-                <td><span class="only-desktop-display">미수강</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2015</span></td>
-                <td class="only-desktop-display"><span class="">1학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">경영학원로</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">경영학원로</span>
-                            <span class="body-attend lec-mobile-attend-x">미수강</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2015</span>
-                            <span class="">1학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>25명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>25명</span></td>
-                <td><span class="only-desktop-display">미수강</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2017</span></td>
-                <td class="only-desktop-display"><span class="">3학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">자료 구조</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">자료 구조</span>
-                            <span class="body-attend lec-mobile-attend-x">미수강</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2017</span>
-                            <span class="">3학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>15명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
-                <td><span class="only-desktop-display">미수강</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2016</span></td>
-                <td class="only-desktop-display"><span class="">2학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend">수강중</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2016</span>
-                            <span class="">2학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>15명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
-                <td><span class="body-attend only-desktop-display">수강중</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2016</span></td>
-                <td class="only-desktop-display"><span class="">2학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend">수강중</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2016</span>
-                            <span class="">2학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>30명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>30명</span></td>
-                <td><span class="body-attend only-desktop-display">수강중</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2016</span></td>
-                <td class="only-desktop-display"><span class="">2학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend">수강중</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2016</span>
-                            <span class="">2학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>25명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>25명</span></td>
-                <td><span class="body-attend only-desktop-display">수강중</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2017</span></td>
-                <td class="only-desktop-display"><span class="">3학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend lec-mobile-attend-x">미수강</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2017</span>
-                            <span class="">3학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>30명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>30명</span></td>
-                <td><span class="only-desktop-display">미수강</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2015</span></td>
-                <td class="only-desktop-display"><span class="">1학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend">수강중</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2015</span>
-                            <span class="">1학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>30명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>30명</span></td>
-                <td><span class="body-attend only-desktop-display">수강중</span></td>
-            </tr>
-
-            <tr>
-                <td class="only-desktop-display"><span class="">2016</span></td>
-                <td class="only-desktop-display"><span class="">2학년</span></td>
-                <td class="only-desktop-display"><span class="">1학기</span></td>
-                <td class="only-desktop-display"><span class="">데이터 분석 전공</span></td>
-                <td class="body-lecture-title">
-                    <span class="only-desktop-display">컴퓨터 개론 및 실습</span>
-                    <div class="lec-mobile-layout">
-                        <div class="lec-mobile-layout-top">
-                            <span class="">컴퓨터 개론 및 실습</span>
-                            <span class="body-attend">수강중</span>
-                        </div>
-                        <div class="lec-mobile-layout-bottom">
-                            <span class="">2016</span>
-                            <span class="">2학년</span>
-                            <span class="">1학기</span>
-                            <span class="">ㆍ</span>
-                            <span class="">데이터 분석 전공</span>
-                            <span class="lec-mobile-number">
-                                <span>15명</span>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-                <td class="only-desktop-display"><span><img src="../../assets/img/page/shape-718.png" alt=""></span></td>
-                <td class="body-lecture-number only-desktop-display"><span>15명</span></td>
-                <td><span class="body-attend only-desktop-display">수강중</span></td>
-            </tr>
-            <!-- .ex tr -->
 
             </tbody>
         </table>
-
+        
+        <!-- 더보기 버튼 영역 -->
+		<div class="ques-8-table-more" style="margin:0">
+		            <div class="more-trigger"><a>더보기</a></div>
+		            <!-- <div class="rest-count"><span>15 / 137</span></div> -->
+        </div>		
     </div>
 </div>
 <!-- </div> -->
@@ -403,6 +125,9 @@
 <script src="https://use.fontawesome.com/f0cba26d23.js"></script>
 <script src="../../assets/js/script.js"></script>
 <script type="text/javascript">
+
+	var pageNum = $("#pageNum").val();
+	console.log("pageNum : " + pageNum);
 	
 	// 전체 강의, 내강의 선택 css
 	$(".snz-nav-item").on("click",function(){					
@@ -437,6 +162,11 @@
 		console.log("selectSemester : " + selectSemester);
 	})
 	
+	// 더보기 버튼 선택시
+	$(".ques-8-table-more").on("click",function(){
+		testMsg("더보기 버튼 선택");
+				
+	})
 	
 		
 	function testMsg(msg){

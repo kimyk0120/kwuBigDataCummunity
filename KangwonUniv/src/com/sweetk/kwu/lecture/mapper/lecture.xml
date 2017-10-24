@@ -11,13 +11,14 @@
 	
 	</insert> -->
 
-	<select id="lecture_list" parameterType="LectureVo" resultType="LectureVo">
-		SELECT LEC_NO, ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
-		FROM lecture		
+	<select id="lecture_list" parameterType="LectureVo" resultType="LectureVo">				
 		
-		<!-- SELECT a.LEC_NO, a.ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
+		SELECT a.LEC_NO, a.ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
 		,(Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO) as stdtcnt
-		FROM lecture a -->
+		,(Select b.id from lec_stdt b where a.LEC_NO = b.LEC_NO and b.id = '${loginId}' ) as attndYn
+		FROM lecture a		
+		WHERE a.YEAR = ${year} AND TERM = ${term}
+		LIMIT ${currentPage},${pageSize}
 	</select>
 	
 	<select id="lecture_list_count" resultType="int">	
