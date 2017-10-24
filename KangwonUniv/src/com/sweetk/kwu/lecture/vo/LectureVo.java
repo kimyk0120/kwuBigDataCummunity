@@ -29,6 +29,8 @@ public class LectureVo {
 	
 	private String selectSemester = "";
 	private String selectYear = "";
+	private String isMine = "";
+	
 	
 	@Override
 	public String toString() {
@@ -39,6 +41,17 @@ public class LectureVo {
 				+ ", attndYn=" + attndYn + ", loginId=" + loginId + ", selectSemester=" + selectSemester
 				+ ", selectYear=" + selectYear + "]";
 	}
+	
+	
+	
+	public String getIsMine() {
+		return isMine;
+	}
+
+	public void setIsMine(String isMine) {
+		this.isMine = isMine;
+	}
+
 	public String getSelectSemester() {
 		return selectSemester;
 	}

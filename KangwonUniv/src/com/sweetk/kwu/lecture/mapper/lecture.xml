@@ -22,6 +22,33 @@
 		as attndYn
 	]]>
 		FROM lecture a		
+		<if test="isMine != null and isMine != ''">
+			JOIN lec_stdt b
+			ON a.LEC_NO = b.LEC_NO and b.id = '${loginId}'
+		</if>
+		WHERE a.YEAR = ${year} AND TERM = ${term}
+		LIMIT ${currentPage},${pageSize}
+		
+	</select>
+
+	<select id="myLecture_list" parameterType="LectureVo" resultType="LectureVo">
+	
+	<![CDATA[						
+		SELECT a.LEC_NO, a.ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
+		,(Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO) as stdtcnt		
+		,case when DATE_FORMAT(now(), "%y-%m-%d") < START_DT then '수강전' 
+		  when DATE_FORMAT(now(), "%y-%m-%d")>END_DT then '강의완료' 
+		  else if((Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO and b.id = '${loginId}' )>0,"수강중","미수강")
+		end
+		as attndYn
+	]]>
+		
+		FROM lecture a
+		
+		
+		JOIN lec_stdt b
+		ON a.LEC_NO = b.LEC_NO and b.id = '${loginId}'
+				
 		WHERE a.YEAR = ${year} AND TERM = ${term}
 		LIMIT ${currentPage},${pageSize}
 		

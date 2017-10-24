@@ -122,7 +122,8 @@
 	var pageNum = $("#pageNum").val();
 	var selectYear;
 	var selectSemester;
-	var flag;
+	var flag = "전체";
+	var data;
 	//console.log("pageNum : " + pageNum);
 	
 	// 전체 강의, 내강의 선택 css, ajax
@@ -133,30 +134,12 @@
 			$(".snz-nav-item").removeClass("current");
 			$(this).addClass("current");
 		}
-		
-		if(flag == "전체"){			
-			pageReset();			
-			setSearchYearSemester();
-			$.ajax({
-				url: "lecList.ajax",
-				type: "GET",
-				data : {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester},
-				success:function(result){
-					$(".table.ques-8-table.lec-table > tbody").html(result);
-				}
-			})//.ajax
-		}else{ // 내강의
-			pageReset();			
-			setSearchYearSemester();
-			$.ajax({
-				url: "mylecList.ajax",
-				type: "GET",
-				data : {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester},
-				success:function(result){
-					$(".table.ques-8-table.lec-table > tbody").html(result);
-				}
-			})//.ajax
-		}//.else	
+		pageReset();			
+		setSearchYearSemester();
+		setData();
+		listAjaxHtml();
+			
+			
 	})//.전체 강의, 내강의 선택 css, ajax
 	
 	// 검색 년도 선택시 변경 css
@@ -175,8 +158,10 @@
 	
 	// 검색 버튼 선택 
 	$("#lecListSrch").on("click",function(){
+		pageReset();
 		setSearchYearSemester();
-		
+		setData();
+		listAjaxHtml();		
 	})
 	
 	// 더보기 버튼 선택시
@@ -185,14 +170,12 @@
 		pageNum ++;
 		$("#pageNum").val(pageNum);
 		setSearchYearSemester();
+		setData();
 		
-		/* console.log("selectYear : " + selectYear);
-		console.log("selectSemester : " + selectSemester); */
-		//console.log("pageNum : " + pageNum);				
 		$.ajax({
 			url: "lecList.ajax",
 			type: "GET",
-			data : {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester},
+			data : data,
 			success:function(result){
 				$(".table.ques-8-table.lec-table > tbody").append(result);
 			}
@@ -200,7 +183,26 @@
 	})//.더보기
 	
 		
-	// func	
+	// func
+	function listAjaxHtml(){
+		$.ajax({
+			url: "lecList.ajax",
+			type: "GET",
+			data : data,
+			success:function(result){
+				$(".table.ques-8-table.lec-table > tbody").html(result);
+			}
+		})//.ajax
+	}
+	
+	function setData(){
+		if(flag == "전체"){			
+			data = {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester};
+		}else{ // 내강의
+			data = {"pageNum":pageNum,"selectYear":selectYear,"selectSemester":selectSemester,"isMine":"Y"};
+		}
+	}
+	
 	function testMsg(msg){
 		console.log("msg : " + msg);
 	}

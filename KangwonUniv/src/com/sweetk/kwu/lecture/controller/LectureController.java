@@ -115,7 +115,7 @@ public class LectureController {
     		lvo.setYear(selectYear);
     		lvo.setTerm(selectSemester);
     		lvo.setLoginId(session.getAttribute("UserId").toString());
-    		
+    		    		    		
     		int count = mapper.lecture_list_count();
     		if (count > 0) {
     			list = mapper.lecture_list(lvo);
