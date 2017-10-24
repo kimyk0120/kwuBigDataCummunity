@@ -5,6 +5,10 @@
 	cursor: pointer;
 }
 
+.fileBox {display:inline-block;width:85%;margin-bottom:5px}
+.fileBox .fileName {display:inline-block;width:75%;height:30px;padding-left:10px;margin-right:5px;line-height:30px;border:1px solid #aaa;background-color:#fff;vertical-align:middle}
+.fileBox .btn_file {display:inline-block;width:100px;height:30px;font-size:0.8em;line-height:30px;text-align:center;vertical-align:middle;background-color:#e1e8ee}
+.fileBox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
 /* Bootstrap */
 .container {
@@ -947,7 +951,7 @@ textarea::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0
     letter-spacing: 0.4px;
     color: #4b5160;
     display: inline-block;
-    width: 125px;
+    width: 90px;
     line-height: 1;
     margin:0;
 }
@@ -980,7 +984,7 @@ textarea::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0
     border:none;
 }
 .enter-title input {
-    width: 858px;
+    width: 95%;
     height: 21px;
     font-size:15px;
     font-weight:300;
@@ -1569,10 +1573,12 @@ textarea::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0
     color: #9fa7b8;
 }
 .lec-write-section .enter-btns {
-    margin-top: 138px;
+	margin-top: 3em;
+    text-align: center;
+    padding-right: 1.5em;
 }
 .lec-write-section .enter-category .dropdown {
-    margin-right: 113px;
+    margin-right: 3em;
 }
 .lec-write-section .enter-title {
     padding-top: 20px;

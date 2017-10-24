@@ -5,10 +5,19 @@
 	
 <mapper namespace="com.sweetk.kwu.lecture.mapper.LectureMapper">
 
-	<!-- <insert id="user_insert" parameterType="CommonVo">
-		INSERT INTO member (id, password, email, mem_prt, name, img_nm, img_org_nm, agree_yn)
-		VALUES (#{id}, password(#{password}), #{email}, #{mem_prt}, #{name}, #{img_nm}, #{img_org_nm}, #{agree_yn})	
-	</insert> -->
+	<insert id="lec_create" parameterType="LectureVo">
+		INSERT INTO lecture (ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN)
+		VALUES (#{id}, #{lec_title}, #{lec_cors}, #{lec_plan}, #{start_dt}, #{end_dt}, #{year}, #{grade}, #{term},#{id},now(),'N')
+		<selectKey resultType="int" keyProperty="lec_no" order="AFTER">
+			select max(lec_no) FROM lecture
+		</selectKey>	
+	</insert>
+	
+	<insert id="insert_lec_group" parameterType="LectureVo">
+		INSERT INTO lec_group (LEC_NO, GROUP_NO)
+		VALUES (#{lec_no},#{group_no})
+			
+	</insert>
 
 	<select id="lecture_list" parameterType="LectureVo" resultType="LectureVo">
 	
@@ -27,32 +36,10 @@
 			ON a.LEC_NO = b.LEC_NO and b.id = '${loginId}'
 		</if>
 		WHERE a.YEAR = ${year} AND TERM = ${term}
+		ORDER BY LEC_NO desc
 		LIMIT ${currentPage},${pageSize}
-		
 	</select>
-
-	<select id="myLecture_list" parameterType="LectureVo" resultType="LectureVo">
 	
-	<![CDATA[						
-		SELECT a.LEC_NO, a.ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
-		,(Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO) as stdtcnt		
-		,case when DATE_FORMAT(now(), "%y-%m-%d") < START_DT then '수강전' 
-		  when DATE_FORMAT(now(), "%y-%m-%d")>END_DT then '강의완료' 
-		  else if((Select count(*) from lec_stdt b where a.LEC_NO = b.LEC_NO and b.id = '${loginId}' )>0,"수강중","미수강")
-		end
-		as attndYn
-	]]>
-		
-		FROM lecture a
-		
-		
-		JOIN lec_stdt b
-		ON a.LEC_NO = b.LEC_NO and b.id = '${loginId}'
-				
-		WHERE a.YEAR = ${year} AND TERM = ${term}
-		LIMIT ${currentPage},${pageSize}
-		
-	</select>
 	
 	<select id="lecture_list_count" resultType="int">	
 		SELECT

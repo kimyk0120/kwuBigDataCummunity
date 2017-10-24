@@ -30,20 +30,76 @@ public class LectureVo {
 	private String selectSemester = "";
 	private String selectYear = "";
 	private String isMine = "";
+	private String selectGrade = "";
+	
+	private String lecTitle = "";
+	private String lecProc = "";
+	private String cntn = "";
+	
+	private int group_no;
 	
 	
-	@Override
-	public String toString() {
-		return "LectureVo [pageSize=" + pageSize + ", currentPage=" + currentPage + ", lec_no=" + lec_no + ", id=" + id
-				+ ", lec_title=" + lec_title + ", lec_cors=" + lec_cors + ", lec_plan=" + lec_plan + ", start_dt="
-				+ start_dt + ", end_dt=" + end_dt + ", year=" + year + ", grade=" + grade + ", term=" + term
-				+ ", reg_id=" + reg_id + ", reg_dt=" + reg_dt + ", del_yn=" + del_yn + ", stdtcnt=" + stdtcnt
-				+ ", attndYn=" + attndYn + ", loginId=" + loginId + ", selectSemester=" + selectSemester
-				+ ", selectYear=" + selectYear + "]";
+
+	public int getGroup_no() {
+		return group_no;
 	}
-	
-	
-	
+
+
+
+	public void setGroup_no(int group_no) {
+		this.group_no = group_no;
+	}
+
+
+
+	public String getCntn() {
+		return cntn;
+	}
+
+
+
+	public void setCntn(String cntn) {
+		this.cntn = cntn;
+	}
+
+
+
+	public String getLecTitle() {
+		return lecTitle;
+	}
+
+
+
+	public void setLecTitle(String lecTitle) {
+		this.lecTitle = lecTitle;
+	}
+
+
+
+	public String getLecProc() {
+		return lecProc;
+	}
+
+
+
+	public void setLecProc(String lecProc) {
+		this.lecProc = lecProc;
+	}
+
+
+
+	public String getSelectGrade() {
+		return selectGrade;
+	}
+
+
+
+	public void setSelectGrade(String selectGrade) {
+		this.selectGrade = selectGrade;
+	}
+
+
+
 	public String getIsMine() {
 		return isMine;
 	}
@@ -172,5 +228,22 @@ public class LectureVo {
 	public void setDel_yn(String del_yn) {
 		this.del_yn = del_yn;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "LectureVo [pageSize=" + pageSize + ", currentPage=" + currentPage + ", lec_no=" + lec_no + ", id=" + id
+				+ ", lec_title=" + lec_title + ", lec_cors=" + lec_cors + ", lec_plan=" + lec_plan + ", start_dt="
+				+ start_dt + ", end_dt=" + end_dt + ", year=" + year + ", grade=" + grade + ", term=" + term
+				+ ", reg_id=" + reg_id + ", reg_dt=" + reg_dt + ", del_yn=" + del_yn + ", stdtcnt=" + stdtcnt
+				+ ", attndYn=" + attndYn + ", loginId=" + loginId + ", selectSemester=" + selectSemester
+				+ ", selectYear=" + selectYear + ", isMine=" + isMine + ", selectGrade=" + selectGrade + ", lecTitle="
+				+ lecTitle + ", lecProc=" + lecProc + ", cntn=" + cntn + "]";
+	}
 		
+	
+	
+	
+	
 }//.class

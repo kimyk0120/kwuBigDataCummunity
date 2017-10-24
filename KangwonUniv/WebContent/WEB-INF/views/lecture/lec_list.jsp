@@ -66,7 +66,7 @@
 <div class="container-fluid snz-page-content-container">
     <div class="row snz-page-content snz-page-lec-section snz-page-lec-list-section">
         <div class="snz-add-btn">
-            <a href="#"><img src="../../assets/img/page/shape-1223-copy.png" alt=""></a>
+            <a id="lecCreate"><img src="../../assets/img/page/shape-1223-copy.png" alt=""></a>
         </div>
         <table class="table ques-8-table lec-table">
             <thead>
@@ -181,6 +181,10 @@
 			}
 		})//.ajax 
 	})//.더보기
+	
+	
+	// 강의 등록 버튼 선택 - 강의 등록 페이지로 이동
+	$("#lecCreate").on("click",function(){location.href="lecCreate.do";})
 	
 		
 	// func
