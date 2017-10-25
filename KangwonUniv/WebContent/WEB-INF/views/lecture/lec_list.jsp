@@ -85,7 +85,7 @@
 			
 			<!-- 강의 리스트 -->
 			<c:forEach items="${list}" var="ll" varStatus="status">			
-			<tr data-lecNo="${ll.lec_no}" data-value-declared>						
+			<tr data-lecNo="${ll.lec_no}" data-value-declared class="lecUnit">						
                 <td class="only-desktop-display"><span class="">${ll.year}</span></td>
                 <td class="only-desktop-display"><span class="">${ll.grade}학년</span></td>
                 <td class="only-desktop-display"><span class="">${ll.term}학기</span></td>
@@ -151,6 +151,7 @@
 	var selectSemester;
 	var flag = "전체";
 	var data;
+	var lecNO;
 	//console.log("pageNum : " + pageNum);
 	
 	// 전체 강의, 내강의 선택 css, ajax
@@ -216,7 +217,7 @@
 	
 	// 강의 계획서 선택시 - 모달 출력
 	$(document).on("click",".lecPlanBtn",function(){
-		var lecNO = $(this).parents("tr").attr("data-lecNo");
+		lecNO = $(this).parents("tr").attr("data-lecNo");
 		//console.log(lecNO);
 		
 		$.ajax({
@@ -224,12 +225,18 @@
 			type: "GET",
 			data : {"lec_no":lecNO},
 			success:function(result){
-				console.log("result");
-				console.log(result);
 				$("div.modal-body").html(result);
 				$("div.modal").modal(); 
 			}
 		})//.ajax
+	})
+	
+	
+	// 강의 선택시 - 강의 하위 리스트로 이동
+	$(document).on("click",".lecUnit > td:not(:nth-child(6))",function(){
+		console.log("test");
+		lecNO =  $(this).parents("tr").attr("data-lecNo");
+		location.href = "lec_list_sub.do?lec_no="+lecNO; 
 	})
 	
 		

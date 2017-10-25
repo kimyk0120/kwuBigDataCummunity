@@ -192,6 +192,30 @@ public class LectureController {
 		return mav;
     	
     }//.lecList
+
+    
+    /**
+     * 강의 하위 리스트 -  확률 및 통계 
+     * @param lvo
+     * @param req
+     * @param session
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/lec_list_sub.do", method = {RequestMethod.GET})
+    protected ModelAndView lec_list_sub(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	ModelAndView mav = new ModelAndView("/lecture/lec_list_sub");
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+//    	String lecPlan = mapper.select_lec_plan(lvo);
+//    	mav.addObject("lec_plan",lecPlan);
+    	
+    	
+    	return mav;
+    	
+    }//.lecList
     
     
     

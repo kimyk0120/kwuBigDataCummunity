@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- 강의 리스트 -->
 <c:forEach items="${list}" var="ll" varStatus="status">			
-<tr data-lecNo="${ll.lec_no}" data-value-declared>
+<tr data-lecNo="${ll.lec_no}" data-value-declared class="lecUnit">
     <td class="only-desktop-display"><span class="">${ll.year}</span></td>
     <td class="only-desktop-display"><span class="">${ll.grade}학년</span></td>
     <td class="only-desktop-display"><span class="">${ll.term}학기</span></td>
