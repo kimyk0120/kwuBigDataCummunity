@@ -48,4 +48,12 @@
 			lecture		
 	</select>
 
+	<select id="select_lec_plan" parameterType="LectureVo" resultType="String">	
+		SELECT
+			lec_plan
+		FROM
+			lecture
+		where lec_no = ${lec_no}			
+	</select>
+
 </mapper>

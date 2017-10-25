@@ -206,14 +206,14 @@ $("#lecRegOk").on("click",function(){
 		return false;
 	}
 	
-	console.log("selectYear :" + selectYear );
+	/* console.log("selectYear :" + selectYear );
 	console.log("selectGrade :" + selectGrade );
 	console.log("selectSemester :" + selectSemester );
 	console.log("lecTitle :" + lecTitle );
 	console.log("lecProc :" + lecProc );
 	console.log("lecPlan :" + lecPlan );
 	console.log("start_dt :" + start_dt );
-	console.log("end_dt :" + end_dt );
+	console.log("end_dt :" + end_dt ); */
 	
 	var data = {
 				  "lec_title":lecTitle,

@@ -85,13 +85,19 @@
 			
 			<!-- 강의 리스트 -->
 			<c:forEach items="${list}" var="ll" varStatus="status">			
-			<tr>				
+			<tr data-lecNo="${ll.lec_no}" data-value-declared>						
                 <td class="only-desktop-display"><span class="">${ll.year}</span></td>
                 <td class="only-desktop-display"><span class="">${ll.grade}학년</span></td>
                 <td class="only-desktop-display"><span class="">${ll.term}학기</span></td>
                 <td class="only-desktop-display"><span class="">${ll.lec_title}</span></td>
                 <td class="body-lecture-title"><span class="only-desktop-display">${ll.lec_cors}</span></td>                    
-                <td class="only-desktop-display"><span><a href="#"><img src="../../assets/img/page/shape-718.png" alt=""></a></span></td>
+                <td class="only-desktop-display">
+                	<span>
+                		<a>
+                			<img src="../../assets/img/page/shape-718.png" alt="" class="lecPlanBtn">
+                		</a>
+                	</span>
+               	</td>
                 <td class="body-lecture-number only-desktop-display"><span>${ll.stdtcnt}명</span></td>
                 <td>              
                 	<span class="only-desktop-display ${ll.attndYn == '수강중' ? 'body-attend' : ''}" >${ll.attndYn}</span>           			
@@ -110,6 +116,27 @@
     </div>
 </div>
 <!-- </div> -->
+<div class="modal fade" id="layerpop" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- header -->
+      <div class="modal-header">
+        <!-- 닫기(x) 버튼 -->
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <!-- header title -->
+        <h4 class="modal-title">강의계획서</h4>
+      </div>
+      <!-- body -->
+      <div class="modal-body">
+            Body
+      </div>
+      <!-- Footer -->
+       <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="snz-modal-layer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -185,6 +212,25 @@
 	
 	// 강의 등록 버튼 선택 - 강의 등록 페이지로 이동
 	$("#lecCreate").on("click",function(){location.href="lecCreate.do";})
+	
+	
+	// 강의 계획서 선택시 - 모달 출력
+	$(document).on("click",".lecPlanBtn",function(){
+		var lecNO = $(this).parents("tr").attr("data-lecNo");
+		//console.log(lecNO);
+		
+		$.ajax({
+			url: "lecPlan.ajax",
+			type: "GET",
+			data : {"lec_no":lecNO},
+			success:function(result){
+				console.log("result");
+				console.log(result);
+				$("div.modal-body").html(result);
+				$("div.modal").modal(); 
+			}
+		})//.ajax
+	})
 	
 		
 	// func

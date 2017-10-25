@@ -171,8 +171,27 @@ public class LectureController {
     	
     }//.lecList
     
-    
-    
+
+    /**
+     * 강의계획서     
+     * @param
+     * @param req
+     * @param session
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/lecPlan.ajax", method = {RequestMethod.GET})
+    protected ModelAndView getLecPlan(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	ModelAndView mav = new ModelAndView("/lecture/lec_modal_temp");
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+		String lecPlan = mapper.select_lec_plan(lvo);
+		mav.addObject("lec_plan",lecPlan);
+		return mav;
+    	
+    }//.lecList
     
     
     
