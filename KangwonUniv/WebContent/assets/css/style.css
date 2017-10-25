@@ -10,6 +10,16 @@
 .fileBox .btn_file {display:inline-block;width:100px;height:30px;font-size:0.8em;line-height:30px;text-align:center;vertical-align:middle;background-color:#e1e8ee}
 .fileBox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
+.snz-page-content .info-list-item .item-title > a > span{
+	display: inline-block;
+    margin-bottom: 11px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    color: #5d6473;
+    line-height: 1;
+}
+
 /* Bootstrap */
 .container {
     width:1365px;
@@ -651,7 +661,7 @@ textarea::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0
     color: #5d6473;
     line-height:1;
 }
-.snz-page-content .info-list-item .item-title span {
+.snz-page-content .info-list-item .item-title span:nth-child(2) {
     margin-left: 16px;
     padding-left: 16px;
     border-left:1px solid #e1e8ee;

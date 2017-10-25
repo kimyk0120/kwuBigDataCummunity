@@ -48,12 +48,12 @@
             $('table.table.lec-table').attr('width', '320');
         }
 
-        $('.detail-rank span.rank-image').click(function() {
-            $(this).toggleClass('active');
-        });
-        $('.item-number span.rank-image').click(function() {
-            $(this).toggleClass('active');
-        });
+//        $('.detail-rank span.rank-image').click(function() {
+//            $(this).toggleClass('active');
+//        });
+//        $('.item-number span.rank-image').click(function() {
+//            $(this).toggleClass('active');
+//        });
 
         $('.navbar-toggle').on( 'click', function() {
             $('.snz-modal-layer').toggleClass('show', $(this).hasClass('collapsed'));

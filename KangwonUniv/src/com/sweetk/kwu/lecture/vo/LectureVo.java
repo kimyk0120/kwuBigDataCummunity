@@ -3,14 +3,28 @@ package com.sweetk.kwu.lecture.vo;
 public class LectureVo {
 	
 	//LEC_NO, ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
+	//LEC_BOARD_NO, LEC_NO, LEC_BOARD_PRT, TITLE, CNTN, TAG, LIKE_CNT, CNT, REG_ID, REG_DT, DEL_YN
 	
-	// paging
+	
 	int pageSize = 10;
+	int subPageSize = 5;
 	int currentPage = 0;
 	
-	// lecture fields
+	private String sortOrder1 = "";
+	private String sortOrder2 = "";
+	private String sortOrder3 = "";
+	
+	private String likeYn = "";
+	
+	private int lec_board_no;
+	private String lec_board_prt = "";
+	private String title = "";
+	private String tag = "";
+	private int like_cnt;
+	private int cnt;
+
 	private int lec_no;
-	private String id = ""; // 강사 아이디
+	private String id = ""; 
 	private String lec_title = "";
 	private String lec_cors = "";
 	private String lec_plan = "";
@@ -39,6 +53,170 @@ public class LectureVo {
 	private int group_no;
 	
 	
+	private String file_nm = "";
+	private String org_file_nm = "";
+
+	
+
+	// getter , setter
+	
+	
+	
+	public String getLikeYn() {
+		return likeYn;
+	}
+
+
+
+	public String getFile_nm() {
+		return file_nm;
+	}
+
+
+
+	public void setFile_nm(String file_nm) {
+		this.file_nm = file_nm;
+	}
+
+
+
+	public String getOrg_file_nm() {
+		return org_file_nm;
+	}
+
+
+
+	public void setOrg_file_nm(String org_file_nm) {
+		this.org_file_nm = org_file_nm;
+	}
+
+
+
+	public String getSortOrder3() {
+		return sortOrder3;
+	}
+
+
+
+	public void setSortOrder3(String sortOrder3) {
+		this.sortOrder3 = sortOrder3;
+	}
+
+
+
+	public String getSortOrder1() {
+		return sortOrder1;
+	}
+
+
+
+	public void setSortOrder1(String sortOrder1) {
+		this.sortOrder1 = sortOrder1;
+	}
+
+
+
+	public String getSortOrder2() {
+		return sortOrder2;
+	}
+
+
+
+	public void setSortOrder2(String sortOrder2) {
+		this.sortOrder2 = sortOrder2;
+	}
+
+
+
+	public int getSubPageSize() {
+		return subPageSize;
+	}
+
+
+
+	public void setSubPageSize(int subPageSize) {
+		this.subPageSize = subPageSize;
+	}
+
+
+
+	public void setLikeYn(String likeYn) {
+		this.likeYn = likeYn;
+	}
+
+
+
+	public int getLec_board_no() {
+		return lec_board_no;
+	}
+
+
+
+	public void setLec_board_no(int lec_board_no) {
+		this.lec_board_no = lec_board_no;
+	}
+
+
+
+	public String getLec_board_prt() {
+		return lec_board_prt;
+	}
+
+
+
+	public void setLec_board_prt(String lec_board_prt) {
+		this.lec_board_prt = lec_board_prt;
+	}
+
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+
+	public String getTag() {
+		return tag;
+	}
+
+
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+
+
+	public int getLike_cnt() {
+		return like_cnt;
+	}
+
+
+
+	public void setLike_cnt(int like_cnt) {
+		this.like_cnt = like_cnt;
+	}
+
+
+
+	public int getCnt() {
+		return cnt;
+	}
+
+
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+
+
 
 	public int getGroup_no() {
 		return group_no;
@@ -233,14 +411,21 @@ public class LectureVo {
 
 	@Override
 	public String toString() {
-		return "LectureVo [pageSize=" + pageSize + ", currentPage=" + currentPage + ", lec_no=" + lec_no + ", id=" + id
-				+ ", lec_title=" + lec_title + ", lec_cors=" + lec_cors + ", lec_plan=" + lec_plan + ", start_dt="
-				+ start_dt + ", end_dt=" + end_dt + ", year=" + year + ", grade=" + grade + ", term=" + term
-				+ ", reg_id=" + reg_id + ", reg_dt=" + reg_dt + ", del_yn=" + del_yn + ", stdtcnt=" + stdtcnt
-				+ ", attndYn=" + attndYn + ", loginId=" + loginId + ", selectSemester=" + selectSemester
-				+ ", selectYear=" + selectYear + ", isMine=" + isMine + ", selectGrade=" + selectGrade + ", lecTitle="
-				+ lecTitle + ", lecProc=" + lecProc + ", cntn=" + cntn + "]";
+		return "LectureVo [pageSize=" + pageSize + ", subPageSize=" + subPageSize + ", currentPage=" + currentPage
+				+ ", sortOrder1=" + sortOrder1 + ", sortOrder2=" + sortOrder2 + ", likeYn=" + likeYn + ", lec_board_no="
+				+ lec_board_no + ", lec_board_prt=" + lec_board_prt + ", title=" + title + ", tag=" + tag
+				+ ", like_cnt=" + like_cnt + ", cnt=" + cnt + ", lec_no=" + lec_no + ", id=" + id + ", lec_title="
+				+ lec_title + ", lec_cors=" + lec_cors + ", lec_plan=" + lec_plan + ", start_dt=" + start_dt
+				+ ", end_dt=" + end_dt + ", year=" + year + ", grade=" + grade + ", term=" + term + ", reg_id=" + reg_id
+				+ ", reg_dt=" + reg_dt + ", del_yn=" + del_yn + ", stdtcnt=" + stdtcnt + ", attndYn=" + attndYn
+				+ ", loginId=" + loginId + ", selectSemester=" + selectSemester + ", selectYear=" + selectYear
+				+ ", isMine=" + isMine + ", selectGrade=" + selectGrade + ", lecTitle=" + lecTitle + ", lecProc="
+				+ lecProc + ", cntn=" + cntn + ", group_no=" + group_no + "]";
 	}
+
+
+
+	
 		
 	
 	

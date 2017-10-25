@@ -16,6 +16,25 @@ public interface LectureMapper {
 
 	public void insert_lec_group(LectureVo lvo) throws Exception;
 
-	public String select_lec_plan(LectureVo lvo) throws Exception; 
+	public String select_lec_plan(LectureVo lvo) throws Exception;
+
+	public String select_lec_title(LectureVo lvo) throws Exception;
+
+	public ArrayList<LectureVo> select_lec_group(LectureVo lvo) throws Exception;
+
+	public ArrayList<LectureVo> select_lec_board(LectureVo lvo) throws Exception;
+
+	public void likeDel(LectureVo lvo) throws Exception;
+
+	public void likeSet(LectureVo lvo) throws Exception;
+
+	public void likeMinus(LectureVo lvo) throws Exception;
+
+	public void likePlus(LectureVo lvo) throws Exception;
+
+	public int info_insert(LectureVo lvo) throws Exception;
+
+	public void info_file_insert(LectureVo lvo) throws Exception; 
+	
 	
 }

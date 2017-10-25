@@ -56,4 +56,100 @@
 		where lec_no = ${lec_no}			
 	</select>
 
+	<select id="select_lec_title" parameterType="LectureVo" resultType="String">	
+		SELECT
+			lec_title
+		FROM
+			lecture
+		where lec_no = ${lec_no}			
+	</select>
+
+	<select id="select_lec_group" parameterType="LectureVo" resultType="LectureVo">	
+		SELECT
+			group_no
+		FROM
+			lec_group
+		where lec_no = ${lec_no}			
+	</select>
+
+	<select id="select_lec_board" parameterType="LectureVo" resultType="LectureVo">	
+		SELECT
+			LEC_BOARD_NO, LEC_NO, LEC_BOARD_PRT, TITLE, CNTN, TAG, LIKE_CNT, CNT, REG_ID, DATE_FORMAT(REG_DT, "%Y-%m-%d") as reg_dt, DEL_YN
+			,(if( (select count(*) from lec_board_like b where b.lec_board_no = a.LEC_BOARD_NO and id = '${id}' )>0,'Y','N')) as likeYn 
+		FROM
+			lec_board a
+		where lec_no = ${lec_no}
+		
+		<if test="sortOrder1 != null and sortOrder1 != '' and sortOrder1 != 'all'">
+			and LEC_BOARD_PRT = '${sortOrder1}'
+		</if>
+		
+		<if test="sortOrder3 != null and sortOrder3 != ''" >
+			AND	(
+					title like concat('%', #{sortOrder3}, '%')
+					OR cntn like concat('%', #{sortOrder3}, '%')
+					OR tag like concat('%', #{sortOrder3}, '%')
+				)
+		</if>
+
+		ORDER BY 
+			<if test='sortOrder2 != null and sortOrder2 != "" and sortOrder2 == "2"'>
+				LIKE_CNT desc,
+			</if>
+			LEC_BOARD_NO desc,
+			reg_dt desc
+		
+		LIMIT ${currentPage},${subPageSize}
+	</select>
+
+	
+	<insert id="likeSet" parameterType="LectureVo">
+		INSERT INTO lec_board_like (lec_board_no, id)
+		VALUES (#{lec_board_no},#{id})
+	</insert>
+	
+	
+	<delete id="likeDel" parameterType="LectureVo">
+		DELETE FROM lec_board_like WHERE lec_board_no = #{lec_board_no} AND id = #{id}
+	</delete>
+	
+	
+	<update id="likeMinus" parameterType="LectureVo">
+		UPDATE lec_board 
+		SET LIKE_CNT = LIKE_CNT - 1
+		WHERE
+		lec_board_no = #{lec_board_no}
+	</update>
+	
+	<update id="likePlus" parameterType="LectureVo">
+		UPDATE lec_board 
+		SET LIKE_CNT = LIKE_CNT + 1
+		WHERE
+		lec_board_no = #{lec_board_no}
+	</update>
+	
+	
+	<insert id="info_insert" parameterType="LectureVo">
+		insert into lec_board (LEC_NO, LEC_BOARD_PRT, TITLE, CNTN, TAG, LIKE_CNT, CNT, REG_ID, REG_DT, DEL_YN)
+		values (#{lec_no}, #{lec_board_prt}, #{title}, #{cntn}, #{tag}, 0, 1, #{id}, now(), 'N');
+	
+		<selectKey resultType="int" keyProperty="lec_board_no" order="AFTER">
+			select max(lec_board_no) FROM lec_board
+		</selectKey>
+	
+	</insert>
+	
+	<insert id="info_file_insert" parameterType="LectureVo">
+		INSERT INTO lec_board_file (LEC_BOARD_NO, FILE_NM)
+		VALUES (#{lec_board_no}, #{file_nm})
+	</insert>
+	
+	
 </mapper>
+
+
+
+
+
+
+<!--  -->

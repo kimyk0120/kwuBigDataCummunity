@@ -15,65 +15,30 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container snz-page-header-container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed nav-collapse-mo" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="nav-collapse-mo-inner"></span>
-            </button>
-            <a class="navbar-brand" href="/">Service name</a>
-            <button type="button" class="navbar-toggle collapsed nav-search-mo nav-search-mo-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-                <a type="submit" class="nav-search-mo-inner"></a>
-            </button>
-        </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <div class="nav navbar-nav snz-header-link-center">
-                <div class="snz-header-link-center-inner">
-                    <span class="snz-center-link only-mobile-display"><a href="#"><img src="../../assets/img/common/user.png" alt=""><span class="hello-user-text">Hello, <i>GruData</i></span></a></span>
-                    <span class="snz-center-link"><a href="/page/info_list">정보창고</a></span> <span class="snz-center-bullet"><img
-                                src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="#">튜토리얼</a></span> <span class="snz-center-bullet"><img
-                                src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="/page/ques_list">실전문제</a></span> <span class="snz-center-bullet"><img
-                                src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="/page/lec_list">강의</a></span>
-                    <span class="snz-center-link only-mobile-display"><a href="#"><img src="../../assets/img/common/logout.png" alt=""> Logout</a></span>
-                </div>
-            </div>
-
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form-group">
-                    <span><img src="../../assets/img/common/shape-1.png" alt=""></span>
-                    <input type="text" class="form-control" placeholder="SEARCH">
-                </div>
-                <a type="submit"><img src="../../assets/img/main/shape-2.png" alt=""></a>
-            </form>
-        </div><!-- /.navbar-collapse -->
-        <div class="collapse navbar-collapse nav-search-mo-outer-toggle" id="bs-example-navbar-collapse-2">
-            <a type="submit" class="nav-search-mo nav-search-mo-inner-toggle"><img src="../../assets/img/common/search-inner.png" alt=""></a>
-            <input type="text" class="form-control" placeholder="Search">
-        </div>
-    </div><!-- /.container-fluid -->
-</nav>
-
+<jsp:include page="../main/top_menu.jsp"  />
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set> 
+<input type="hidden" value="${pageNum}" id="pageNum">
+<input type="hidden" value="${lec_no}" id="lec_no">
+<!-- menu -->
 <div class="container-fluid snz-page-container">
     <div class="container snz-page-container-inner">
         <div class="row snz-page-title">
-            <h1>정보창고</h1>
+            <h1>강의 > ${lecTitle}</h1>
         </div>
         <div class="row snz-page-nav clearfix">
             <div class="snz-nav-item-outer">
                 <div class="snz-nav-item-inner">
-                    <span class="snz-nav-item current"><a href="#">전체</a></span>
-                    <span class="snz-nav-item"><a href="#">Python</a></span>
-                    <span class="snz-nav-item"><a href="#">R</a></span>
-                    <span class="snz-nav-item"><a href="#">SAS</a></span>
-                    <span class="snz-nav-item"><a href="#">SPSS</a></span>
-                    <span class="snz-nav-item"><a href="#">EXCEL</a></span>
-                    <span class="snz-nav-item"><a href="#">기타</a></span>
+                    <span class="snz-nav-item current"><a>전체</a></span>
+                    <span class="snz-nav-item"><a>과제</a></span>
+                    <span class="snz-nav-item"><a>수업</a></span>
+                    <span class="snz-nav-item"><a>기타</a></span>
+                    
+                    <c:forEach items="${grouplist}" var="gl">
+	                    <span class="snz-nav-item" data-gourpno="${gl.group_no}" data-value-declared><a>${gl.group_no}조</a></span>
+                    </c:forEach>
+                    
                 </div>
             </div>
             <div class="snz-subnav-search">
@@ -85,158 +50,233 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">최신순</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">이름순</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">참여 인기순</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">마감순</a></li>
+                            <li role="presentation" class="sortMenu"><a role="menuitem" tabindex="-1">최신순</a></li>
+                            <li role="presentation" class="sortMenu"><a role="menuitem" tabindex="-1">인기순</a></li>
                         </ul>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" id="srchInput">
                     </div>
-                    <a href="#"><img src="../../assets/img/page/shape-2.png" alt=""></a> <!-- submit 제거 -->
+                    <a ><img src="../../assets/img/page/shape-2.png" alt="" id="lecBoardSrchBtn"></a> 
                 </div>
 
             </div>
         </div>
     </div>
-</div><div class="container-fluid snz-page-content-container">
-    <div class="row snz-page-content snz-info-list-content">
+</div>
+<!-- content -->
+<div class="container-fluid snz-page-content-container">
+    <div class="row snz-page-content snz-info-list-content" >
         <div class="snz-add-btn">
-            <a href="#"><img src="../../assets/img/page/shape-1223-copy.png" alt=""></a>
+            <a ><img src="../../assets/img/page/shape-1223-copy.png" alt="" id="lecBoardRegBtn"></a>
         </div>
-
-        <div class="info-list-item clearfix">
-            <div class="info-list-item-inner clearfix">
-                <div class="item-number">
-                    <span class="rank-image"></span>
-                    <span>12</span>
-                </div>
-                <div class="item-desc">
-                    <div class="item-title">
-                        <a href="/page/info_detail"><h4>프리미어리그 경기 결과 예측</h4></a>
-                        <span class="item-desc-inner-cate-up">R</span>
-                    </div>
-                    <div class="item-tags">
-                        <span>R</span>
-                        <span>텍스트 분석</span>
-                        <span>예측 분석 모델링</span>
-                        <span>데이터 파싱</span>
-                        <span>군집분석</span>
-                    </div>
-                    <div class="item-info">
-                        <span><img src="../../assets/img/page/view-icon.png" alt=""></span>
-                        <span class="item-view">101 View</span> <span class="item-bullet">&bullet;</span> <span class="item-date">2017.08.31</span>
-                        <span class="item-desc-inner-cate-down">R</span>
-                    </div>
-                </div>
-                <div class="item-author">
-                    <span class="item-author-name">Mark Lee</span>
-                    <span class="item-author-img"><img src="../../assets/img/page/layer-710.png" alt=""></span>
-                </div>
-            </div>
+		
+		<!-- list -->
+		<div id="listAppend">
+		
+		<c:forEach items="${boardList}" var="bl" begin="0" varStatus="stat">
+	        <div class="listUnit info-list-item clearfix" data-lecBoardNo="${bl.lec_board_no}" data-value-declared>
+	            <div class="info-list-item-inner clearfix">
+	                <div class="item-number">
+	                    <span class="rank-image ${bl.likeYn eq 'Y' ? 'active' : ''}"></span>
+	                    <span>${bl.like_cnt}</span>
+	                </div>
+	                <div class="item-desc">
+	                    <div class="item-title">
+	                        <a href="/page/info_detail"><span>${bl.title}</span></a>
+	                        <span class="item-desc-inner-cate-up">
+	                        <c:choose>
+								<c:when test="${bl.lec_board_prt eq 'A' }">과제</c:when>	                        
+	                        	<c:when test="${bl.lec_board_prt eq 'B' }">수업</c:when>
+	                        	<c:when test="${bl.lec_board_prt eq 'C' }">기타</c:when>
+	                        	<c:otherwise>${bl.lec_board_prt}조</c:otherwise>
+	                        </c:choose>
+                        	</span>
+	                    </div>
+	                    <div class="item-tags">
+	                    	<c:set var="tg" value="${fn:split(bl.tag,',')}" />
+	                    	<c:forEach var="t" items="${tg}">
+								<span>${t}</span>
+							</c:forEach>
+	                    </div>
+	                    <div class="item-info">
+	                        <span><img src="../../assets/img/page/view-icon.png" alt=""></span>
+	                        <span class="item-view">${bl.cnt} View</span> <span class="item-bullet">&#8226;</span> <span class="item-date">${bl.reg_dt}</span>
+	                    </div>
+	                </div>
+	                <div class="item-author">
+	                    <span class="item-author-name">${bl.reg_id}</span>
+	                    <span class="item-author-img"><img src="../../assets/img/page/layer-710.png" alt=""></span>
+	                </div>
+	            </div>
+	        </div>
+        </c:forEach>
+        
         </div>
-
-        <div class="info-list-item clearfix">
-            <div class="info-list-item-inner clearfix">
-                <div class="item-number">
-                    <span class="rank-image"></span>
-                    <span>234</span>
-                </div>
-                <div class="item-desc">
-                    <div class="item-title">
-                        <a href="/page/info_detail"><h4>코드 중심의 파이썬 클러스터링 예제</h4></a>
-                        <span class="item-desc-inner-cate-up">Python</span>
-                    </div>
-                    <div class="item-tags">
-                        <span>PYTHON</span>
-                        <span>파이썬</span>
-                        <span>클러스터링</span>
-                        <span>비지도 학습</span>
-                        <span>군집화</span>
-                    </div>
-                    <div class="item-info">
-                        <span><img src="../../assets/img/page/view-icon.png" alt=""></span>
-                        <span class="item-view">90 View</span> <span class="item-bullet">&bullet;</span> <span class="item-date">2017.08.26</span>
-                        <span class="item-desc-inner-cate-down">Python</span>
-                    </div>
-                </div>
-                <div class="item-author">
-                    <span class="item-author-name">RealMn</span>
-                    <span class="item-author-img"><img src="../../assets/img/page/shape-634-copy.png" alt=""></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="info-list-item clearfix">
-            <div class="info-list-item-inner clearfix">
-                <div class="item-number">
-                    <span class="rank-image"></span>
-                    <span>8</span>
-                </div>
-                <div class="item-desc">
-                    <div class="item-title">
-                        <a href="/page/info_detail"><h4>범죄 예방을 위한 ‘범죄 예측 프로그램 제작’</h4></a>
-                        <span class="item-desc-inner-cate-up">R</span>
-                    </div>
-                    <div class="item-tags">
-                        <span>R</span>
-                        <span>예측</span>
-                        <span>위험도 도출</span>
-                        <span>범죄</span>
-                    </div>
-                    <div class="item-info">
-                        <span><img src="../../assets/img/page/view-icon.png" alt=""></span>
-                        <span class="item-view">88 View</span> <span class="item-bullet">&bullet;</span> <span class="item-date">2017.08.28</span>
-                        <span class="item-desc-inner-cate-down">R</span>
-                    </div>
-                </div>
-                <div class="item-author">
-                    <span class="item-author-name">GruData</span>
-                    <span class="item-author-img"><img src="../../assets/img/page/user-copy-2.png" alt=""></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="info-list-item clearfix">
-            <div class="info-list-item-inner clearfix">
-                <div class="item-number">
-                    <span class="rank-image"></span>
-                    <span>8</span>
-                </div>
-                <div class="item-desc">
-                    <div class="item-title">
-                        <a href="/page/info_detail"><h4>R - 텍스트 분석</h4></a>
-                        <span class="item-desc-inner-cate-up">R</span>
-                    </div>
-                    <div class="item-tags">
-                        <span>R</span>
-                        <span>텍스트 분석</span>
-                        <span>예측 분석 모델링</span>
-                        <span>데이터 파싱</span>
-                        <span>군집 분석</span>
-                    </div>
-                    <div class="item-info">
-                        <span><img src="../../assets/img/page/view-icon.png" alt=""></span>
-                        <span class="item-view">123 View</span> <span class="item-bullet">&bullet;</span> <span class="item-date">2017.06.15</span>
-                        <span class="item-desc-inner-cate-down">R</span>
-                    </div>
-                </div>
-                <div class="item-author">
-                    <span class="item-author-name">NewMn</span>
-                    <span class="item-author-img"><img src="../../assets/img/page/shape-634-copy.png" alt=""></span>
-                </div>
-            </div>
-        </div>
-
+        <!-- .list -->
+		
+        <!-- 더보기 버튼 영역 -->
+		<div class="ques-8-table-more" style="margin:0" ><div class="more-trigger"><a>더보기</a></div></div>
     </div>
 </div>
-</div>
+
 <div class="snz-modal-layer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="../../assets/lib/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 <script src="https://use.fontawesome.com/f0cba26d23.js"></script>
 <script src="../../assets/js/script.js"></script>
+<script type="text/javascript">
+
+	var lec_no = $("#lec_no").val();
+	var pageNum = $("#pageNum").val();
+	var flag = "전체";
+	var data;	
+	var lecBoardNo;
+	var sortFlag;
+	var sortOrder1 = "all";
+	var sortOrder2 = "1";
+	var sortOrder3 = "";
+	
+	
+	// 검색분류 선택 css
+	$(".snz-nav-item").on("click",function(){	
+		flag =  $(this).children("a").text();		
+		if(!$(this).hasClass("current")){
+			$(".snz-nav-item").removeClass("current");
+			$(this).addClass("current");
+		}
+		pageReset();
+		setData();
+		listAjaxToHtml();			
+		
+	});
+	
+	// 정렬기준 드롭다운 선택시 css
+	$(".sortMenu").on("click",function(){
+		var selectSortMenu= $(this).children("a").text();
+		if(selectSortMenu=="최신순"){
+			sortOrder2 = "1";
+		}else{
+			sortOrder2 = "2";
+		}
+		//console.log("selectSortMenu : " + selectSortMenu);
+		$("#dropdownMenu1 span.selected-item").html(selectSortMenu);
+	});
+	
+	// 라이크 선택시
+	$(document).on("click",".rank-image",function(){
+		
+		var thisEl = $(this);
+		console.log(thisEl);
+		
+		lecBoardNo = $(this).parents(".listUnit").attr("data-lecBoardNo");
+		console.log(lecBoardNo);
+		
+		var likeCnt = $(this).next("span").text();
+		var likeNum = Number(likeCnt);
+		
+		var flag;
+		// 라이크 해제
+		
+		if($(this).hasClass("active")){
+			flag = "N";	
+			likeNum -= 1;
+			$(this).removeClass("active");
+		}else{
+			flag = "Y";
+			likeNum += 1;
+			$(this).addClass("active");
+		}	
+		
+		 $(this).next("span").text(likeNum);
+		 
+		$.get("likeSet.ajax",{"lec_board_no":lecBoardNo,"flag":flag},function(){}); 
+	});
+	
+	// 더보기 버튼 선택시
+	$(".ques-8-table-more").on("click",function(){
+		//testMsg("더보기 버튼 선택");
+		pageNum ++;
+		$("#pageNum").val(pageNum);
+		setData();
+		
+		$.ajax({
+			url: "lec_list_sub.ajax",
+			type: "GET",
+			data : data,
+			success:function(result){
+				//console.log(result);
+				$("#listAppend").append(result);
+			}
+		})//.ajax 
+	})//.더보기
+	
+	
+	// 검색 버튼 선택시
+	$("#lecBoardSrchBtn").on("click",function(){
+		likeFlag = true;
+		sortOrder3 = $("#srchInput").val();
+		pageReset();
+		setData();
+		listAjaxToHtml();			
+	})
+	
+	
+	// 글등록 버튼 선택 - 글 등록 페이지로 이동
+	$("#lecBoardRegBtn").on("click",function(){
+		location.href = "lec_board_create.do?lec_no="+lec_no;
+	});
+		
+	
+	//func
+	function listAjaxToHtml(){
+		$.ajax({
+			url: "lec_list_sub.ajax",
+			type: "GET",
+			data : data,
+			success:function(result){
+				//console.log(result);
+				$("#listAppend").html(result);
+			}
+		});
+	};
+	
+	
+	function setData(){
+		
+		if(flag=='전체'){
+			sortOrder1 = 'all';
+		}else if(flag=='과제'){
+			sortOrder1 = 'A';
+		}else if(flag=='수업'){
+			sortOrder1 = 'B';
+		}else if(flag=='기타'){
+			sortOrder1 = 'C';
+		}else{
+			sortOrder1 = flag.replace(/[^0-9]/g,"");
+		}
+				
+		data = {"pageNum":pageNum,"lec_no":lec_no,"sortOrder1":sortOrder1,"sortOrder2":sortOrder2,"sortOrder3":sortOrder3};
+	}
+	
+	function pageReset(){
+		$("#pageNum").val("0");
+		pageNum = $("#pageNum").val();
+	}
+	
+</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+<!--  -->
+

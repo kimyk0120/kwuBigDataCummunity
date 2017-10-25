@@ -81,7 +81,7 @@
                 <th>수강여부</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="listAppendDiv">
 			
 			<!-- 강의 리스트 -->
 			<c:forEach items="${list}" var="ll" varStatus="status">			
@@ -166,8 +166,6 @@
 		setSearchYearSemester();
 		setData();
 		listAjaxHtml();
-			
-			
 	})//.전체 강의, 내강의 선택 css, ajax
 	
 	// 검색 년도 선택시 변경 css
@@ -238,7 +236,6 @@
 		lecNO =  $(this).parents("tr").attr("data-lecNo");
 		location.href = "lec_list_sub.do?lec_no="+lecNO; 
 	})
-	
 		
 	// func
 	function listAjaxHtml(){
