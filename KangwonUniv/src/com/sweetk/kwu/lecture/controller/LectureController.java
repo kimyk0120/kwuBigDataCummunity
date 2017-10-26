@@ -693,19 +693,79 @@ public class LectureController {
 	         System.out.println("filesize : "+ filesize);
 	    }
 	    
+	    int cnt=0;
 	    
 	    FileInputStream file = new FileInputStream(new File(savePath+"/"+fileName));
 	    XSSFWorkbook workbook = new XSSFWorkbook(file);
 	    XSSFSheet sheet = workbook.getSheetAt(0);
 	    Iterator<Row> rowIterator = sheet.iterator();
 	    rowIterator.next();
-	    int cnt=0;
 	    
 	    
-	    
+      
+//		    while(rowIterator.hasNext()) {
+//	          Row row = rowIterator.next();
+//	          Iterator<Cell> cellIterator = row.cellIterator();
+//	
+//	            
+//	         if(row != null && row.getCell(0) != null){
+//	       
+//	             String inputYyyy=row.getCell(0).getStringCellValue();
+//	             String bsnsCd=row.getCell(1).getStringCellValue();
+//	             String dpCd=row.getCell(2).getStringCellValue();
+//	             String d_seq=row.getCell(4).getStringCellValue();
+//	             String expl = "";
+//	             
+//	             if(row.getCell(7) != null) {
+//	                int a = row.getCell(7).getCellType();
+//	                
+//	                if(a == 0 || a == 2) {
+//	                   expl = ""+row.getCell(7).getNumericCellValue();
+//	                }
+//	                else {
+//	                   expl = row.getCell(7).getStringCellValue();
+//	                }
+//	             }
+//	         }
+//	    }
 	    
 	}//.fileUpload
     
+
+//           
+//           while(rowIterator.hasNext()) {
+//               Row row = rowIterator.next();
+//               Iterator<Cell> cellIterator = row.cellIterator();
+//
+//                 
+//              if(row != null && row.getCell(0) != null){
+//            
+//                  String inputYyyy=row.getCell(0).getStringCellValue();
+//                  String bsnsCd=row.getCell(1).getStringCellValue();
+//                  String dpCd=row.getCell(2).getStringCellValue();
+//                  String d_seq=row.getCell(4).getStringCellValue();
+//                  String expl = "";
+//                  
+//                  if(row.getCell(7) != null) {
+//                     int a = row.getCell(7).getCellType();
+//                     
+//                     if(a == 0 || a == 2) {
+//                        expl = ""+row.getCell(7).getNumericCellValue();
+//                     }
+//                     else {
+//                        expl = row.getCell(7).getStringCellValue();
+//                     }
+//                  }
+//                  
+//                 dvo.setAPPR_YYYY(inputYyyy);
+//                 dvo.setBSNS_NO(bsnsCd);
+//                 dvo.setDTPT_CODE(dpCd);
+//                 dvo.setDTPT_SEQ(d_seq);
+//                 dvo.setEXPL(expl);
+//                  
+//                 mapper.scribe_dtl_act(dvo);
+//                 
+//            
     
     
     
