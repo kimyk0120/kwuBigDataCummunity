@@ -258,7 +258,11 @@
 
 	<insert id="insert_excel_group" parameterType="LectureVo">
 		INSERT INTO lec_stdt (LEC_NO, ID, GROUP_NO)
-		VALUES (#{lec_no},#{id},#{group_no})
+		SELECT #{lec_no},#{id},#{group_no}
+		from dual WHERE NOT EXISTS ( 
+			SELECT * FROM lec_stdt WHERE id = '${id}' and lec_no  = #{lec_no}  
+		)
+		
 	</insert>
 	
 </mapper>

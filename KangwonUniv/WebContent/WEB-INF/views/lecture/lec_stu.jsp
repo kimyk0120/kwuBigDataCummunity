@@ -222,8 +222,10 @@
 	        data: formData,
 	        type: 'POST',
 	        success: function(result){
+	        	 location.reload();
 	        },
 	        error:function(){
+	        	alert("error");
 	        }
 	    });
 		
