@@ -21,22 +21,25 @@
 <c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set> 
 <input type="hidden" value="${pageNum}" id="pageNum">
 <input type="hidden" value="${lec_no}" id="lec_no">
+
 <!-- menu -->
 <div class="container-fluid snz-page-container">
     <div class="container snz-page-container-inner">
         <div class="row snz-page-title">
-            <h1>강의 > ${lecTitle}</h1>
+            <h1>강의 > ${lecTitle} <input type="button" class="btn btn-primary" value="수강생관리" id="stuEditBtn"></h1>
+        	
         </div>
+            
         <div class="row snz-page-nav clearfix">
             <div class="snz-nav-item-outer">
                 <div class="snz-nav-item-inner">
-                    <span class="snz-nav-item current"><a>전체</a></span>
-                    <span class="snz-nav-item"><a>과제</a></span>
-                    <span class="snz-nav-item"><a>수업</a></span>
-                    <span class="snz-nav-item"><a>기타</a></span>
+                    <span class="snz-nav-item current" data-val="all" data-value-declared><a>전체</a></span>
+                    <span class="snz-nav-item" data-val="A" data-value-declared><a>과제</a></span>
+                    <span class="snz-nav-item" data-val="B" data-value-declared><a>수업</a></span>
+                    <span class="snz-nav-item" data-val="C" data-value-declared><a>기타</a></span>
                     
                     <c:forEach items="${grouplist}" var="gl">
-	                    <span class="snz-nav-item" data-gourpno="${gl.group_no}" data-value-declared><a>${gl.group_no}조</a></span>
+	                    <span class="snz-nav-item" data-val="${gl.group_no}" data-gourpno="${gl.group_no}" data-value-declared><a>${gl.group_no}조</a></span>
                     </c:forEach>
                     
                 </div>
@@ -138,6 +141,16 @@
 	var sortOrder2 = "1";
 	var sortOrder3 = "";
 	
+	var initSortOrder = '${initSortOrder}';
+	
+	if(!!initSortOrder){
+		$(".snz-nav-item").each(function(index){
+			$(this).removeClass("current");
+			if(initSortOrder == $(this).attr("data-val")){
+				$(this).addClass("current");
+			}
+		});
+	};
 	
 	// 검색분류 선택 css
 	$(".snz-nav-item").on("click",function(){	
@@ -149,7 +162,6 @@
 		pageReset();
 		setData();
 		listAjaxToHtml();			
-		
 	});
 	
 	// 정렬기준 드롭다운 선택시 css
@@ -168,10 +180,10 @@
 	$(document).on("click",".rank-image",function(){
 		
 		var thisEl = $(this);
-		console.log(thisEl);
+		//console.log(thisEl);
 		
 		lecBoardNo = $(this).parents(".listUnit").attr("data-lecBoardNo");
-		console.log(lecBoardNo);
+		//console.log(lecBoardNo);
 		
 		var likeCnt = $(this).next("span").text();
 		var likeNum = Number(likeCnt);
@@ -237,7 +249,13 @@
 		console.log("lecBoardNo : " + lecBoardNo);
 		
 		location.href = "lec_board_detail.do?lec_no="+lec_no+"&lec_board_no="+lecBoardNo; 
-	})	
+	});
+	
+	// 수강생 관리 버튼 선택
+	$("#stuEditBtn").on("click",function(){
+		location.href = "lec_stu.do?lec_no="+lec_no;
+	});
+	
 	
 	//func
 	function listAjaxToHtml(){
@@ -251,7 +269,6 @@
 			}
 		});
 	};
-	
 	
 	function setData(){
 		

@@ -15,54 +15,16 @@
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container snz-page-header-container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed nav-collapse-mo" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="nav-collapse-mo-inner"></span>
-            </button>
-            <a class="navbar-brand" href="/">Service name</a>
-            <button type="button" class="navbar-toggle collapsed nav-search-mo nav-search-mo-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-                <a type="submit" class="nav-search-mo-inner"></a>
-            </button>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <div class="nav navbar-nav snz-header-link-center">
-                <div class="snz-header-link-center-inner">
-                    <span class="snz-center-link only-mobile-display"><a href="#"><img src="../../assets/img/common/user.png" alt=""><span class="hello-user-text">Hello, <i>GruData</i></span></a></span>
-                    <span class="snz-center-link"><a href="/page/info_list">정보창고</a></span> <span class="snz-center-bullet"><img
-                            src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="#">튜토리얼</a></span> <span class="snz-center-bullet"><img
-                            src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="/page/ques_list">실전문제</a></span> <span class="snz-center-bullet"><img
-                            src="../../assets/img/common/ellipse-2-copy-2.png" alt=""></span>
-                    <span class="snz-center-link"><a href="/page/lec_list">강의</a></span>
-                    <span class="snz-center-link only-mobile-display"><a href="#"><img src="../../assets/img/common/logout.png" alt=""> Logout</a></span>
-                </div>
-            </div>
-
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form-group">
-                    <span><img src="../../assets/img/common/shape-1.png" alt=""></span>
-                    <input type="text" class="form-control" placeholder="SEARCH">
-                </div>
-                <a href="#"><img src="../../assets/img/main/shape-2.png" alt=""></a>
-            </form>
-        </div><!-- /.navbar-collapse -->
-        <div class="collapse navbar-collapse nav-search-mo-outer-toggle" id="bs-example-navbar-collapse-2">
-            <a type="submit" class="nav-search-mo nav-search-mo-inner-toggle"><img src="../../assets/img/common/search-inner.png" alt=""></a>
-            <input type="text" class="form-control" placeholder="Search">
-        </div>
-    </div><!-- /.container-fluid -->
-</nav>
+<jsp:include page="../main/top_menu.jsp"  />
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set> 
+<input type="hidden" value="${pageNum}" id="pageNum">
+<input type="hidden" value="${lec_no}" id="lec_no">
 
 <div class="container-fluid snz-page-container">
     <div class="container snz-page-container-inner">
         <div class="row snz-page-title">
-            <h1>강의 > 확률 및 통계 > 수강생</h1>
+            <h1>강의 > ${lecTitle} > 수강생</h1>
         </div>
         <div class="row snz-page-nav lec-page-nav">
             <div class="snz-nav-item-outer">
@@ -71,23 +33,26 @@
                     <span class="snz-nav-item"><a href="#">과제</a></span>
                     <span class="snz-nav-item"><a href="#">수업</a></span>
                     <span class="snz-nav-item"><a href="#">기타</a></span>
+                    <c:forEach items="${grouplist}" var="gl">
+	                    <span class="snz-nav-item" data-gourpno="${gl.group_no}" data-value-declared><a>${gl.group_no}조</a></span>
+                    </c:forEach>
                 </div>
             </div>
             <div class="snz-subnav-search snz-lec-subnav-search">
-                <span class="snz-nav-item lec-nav-dropdown">
-                    <div class="dropdown lec-select-dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">조선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                </span>
+                 <div class="dropdown lec-select-dropdown">
+                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+                         <span class="selected-item">조선택</span>
+                         <span class="caret"></span>
+                     </button>
+                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                     <li role="presentation" class="groupSortingBtn"><a role="menuitem" tabindex="-1"  data-gourpno="" data-value-declared>전체</a></li>
+                     <c:forEach items="${grouplist}" var="gl">
+                         <li role="presentation" class="groupSortingBtn">
+                         	<a role="menuitem" tabindex="-1"  data-gourpno="${gl.group_no}" data-value-declared>${gl.group_no}조</a>
+                       	</li>
+                     </c:forEach>
+                     </ul>
+                 </div>
             </div>
         </div>
     </div>
@@ -95,11 +60,16 @@
 
     <div class="row snz-page-content snz-page-ques-8-section snz-page-stu-list-section">
         <div class="snz-add-btn">
-            <a href="#"><img src="../../assets/img/page/shape-1224-copy.png" alt=""></a>
+            <a>
+            	<label for="excelFileUp">
+	            	<img src="../../assets/img/page/shape-1224-copy.png" alt="" id="excelFileUploadBtn">
+            	</label>
+            	<input type="file" name="excelFileUp" id="excelFileUp" style="display: none;" value="" >
+            </a>
         </div>
         <div class="stu-top-btns">
-            <a href="#"><img src="../../assets/img/page/org-add.png" alt=""></a>
-            <a href="#"><img src="../../assets/img/page/org-del.png" alt=""></a>
+            <a ><img src="../../assets/img/page/org-add.png" alt="" id="groupAddBtn"></a>
+            <a ><img src="../../assets/img/page/org-del.png" alt="" id="groupDelBtn"></a>
         </div>
         <table class="table ques-8-table">
             <thead>
@@ -110,210 +80,48 @@
                 <th class="head-center">조편성</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="stuListBody">
+           
+            <!-- list unit -->
+            <c:set value="선택" var="initGroup"></c:set>
+            <c:forEach items="${studentList}" var="sl" varStatus="stat" >
             <tr>
-                <td class="body-no"><span class="ques-8-table-no">1</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/layer-710.png" alt=""></span><span class="ques-8-table-name">RealMan</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">전혜영</span></td>
+                <td class="body-no"><span class="ques-8-table-no">${stat.index+1}</span></td>
+                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/layer-710.png" alt=""></span><span class="ques-8-table-name">${sl.id}</span></td>
+                <td class="body-count body-rname"><span class="ques-8-table-count">${sl.name}</span></td>
                 <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
+                     <div class="dropdown" style="text-align: center;">  
+                        <button class="btn btn-default dropdown-toggle dropdownMenu2" type="button"  data-toggle="dropdown" aria-expanded="false">
+                            <span class="selected-item">
+                            	<c:forEach items="${grouplist}" var="gl">
+                            			<c:if test="${gl.group_no eq sl.group_no}">
+                            				<c:set value="${gl.group_no}조" var="initGroup"></c:set>
+                            			</c:if>
+                            	</c:forEach>	
+                            	${initGroup}
+                            </span>
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                        	<c:forEach items="${grouplist}" var="gl">
+	                            <li role="presentation" class="groupArrBtn" >
+	                            	<input type="hidden" name="stuId" value="${sl.id}">
+	                            	<a role="menuitem" tabindex="-1" data-gourpno="${gl.group_no}" data-value-declared>${gl.group_no}조</a>
+                            	</li>
+                        	</c:forEach>
                         </ul>
                     </div>
-                    </span>
                 </td>
             </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">2</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/shape-634-copy.png" alt=""></span><span class="ques-8-table-name">GruData</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">김승희</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">3</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/shape-634-copy.png" alt=""></span><span class="ques-8-table-name">Unknowing</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">장윤정</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">4</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/user-copy.png" alt=""></span><span class="ques-8-table-name">NewMn</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">박혜민</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">5</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/layer-2374.png" alt=""></span><span class="ques-8-table-name">RealMan</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">홍길동</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">6</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/user-copy-3.png" alt=""></span><span class="ques-8-table-name">Gobig</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">김현빈</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">7</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/shape-634-copy.png" alt=""></span><span class="ques-8-table-name">PrinceDT</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">윤지성</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">8</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/shape-634-copy.png" alt=""></span><span class="ques-8-table-name">RealMan</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">이마크</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="body-no"><span class="ques-8-table-no">9</span></td>
-                <td class="body-name"><span class="ques-8-table-img"><img src="../../assets/img/page/shape-634-copy.png" alt=""></span><span class="ques-8-table-name">data_factory</span></td>
-                <td class="body-count body-rname"><span class="ques-8-table-count">김길동</span></td>
-                <td class="body-org">
-                    <span class="ques-8-table-regdate">
-                        <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected-item">선택</span>
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">1조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">2조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">3조</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">4조</a></li>
-                        </ul>
-                    </div>
-                    </span>
-                </td>
-            </tr>
-
+            </c:forEach>
+            <!-- .list Unit -->
+            
             </tbody>
         </table>
-
     </div>
-</div>
+    
+    <form id="excelFileForm" action="test.do" method="post" encType="multipart/form-data"></form>
+		
 </div>
 <div class="snz-modal-layer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -321,5 +129,135 @@
 <script src="../../assets/lib/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 <script src="https://use.fontawesome.com/f0cba26d23.js"></script>
 <script src="../../assets/js/script.js"></script>
+<script type="text/javascript">
+
+	var lec_no = $("#lec_no").val();
+	var pageNum = $("#pageNum").val();
+	var flag = "전체";
+	var data;	
+	var lecBoardNo;
+	var sortFlag;
+	var sortOrder1 = "all";
+	var sortOrder2 = "";
+	var arrOrder = "";
+	var selectId  = "";
+	var form = $('form')[0];
+ 	var formData = new FormData(form);
+	
+	// 검색 조 드롭다운 선택시 
+	$(".groupSortingBtn").on("click",function(){
+		
+		sortOrder2 = $(this).children("a").text();
+		$("#dropdownMenu1 > .selected-item").html(sortOrder2);
+		sortOrder2 = sortOrder2.replace(/[^0-9]/g,"");
+		
+		$.get("lec_stu.ajax",{"lec_no":lec_no,"sortOrder2":sortOrder2},function(result){
+			$("#stuListBody").html(result);						
+		});
+	});
+	
+	
+	// 조편성 드롭다운 선택시 - 조편성 업데이트
+	$(document).on("click",".groupArrBtn",function(){
+		arrOrder =  $(this).children("a").text();
+		$(this).parents("td.body-org").find(".dropdownMenu2 > .selected-item").html(arrOrder);
+		arrOrder = arrOrder.replace(/[^0-9]/g,"");
+		stuId = $(this).children("input[name=stuId]").val();
+		
+		$.get("stu_group_update.ajax",{"lec_no":lec_no,"arrOrder":arrOrder,"id":stuId},function(result){});
+		
+	});
+	
+	
+	// 게시판 검색분류 선택 - 상위 게시판으로 이동
+	$(".snz-nav-item").on("click",function(){	
+		flag =  $(this).children("a").text();		
+		if(!$(this).hasClass("current")){
+			$(".snz-nav-item").removeClass("current");
+			$(this).addClass("current");
+		}
+		setData();
+		goSublist();			
+	});
+	
+	
+	// 조추가 선택시 
+	$("#groupAddBtn").on("click",function(){
+		//console.log("groupAddBt");
+		$.get("lec_group_add.ajax",{"lec_no":lec_no},function(result){
+			 if(result == 1){
+				 location.reload();
+			 }else if(result == -1){
+				 alert("5개 이상 추가할 수 없습니다. ");
+			 }
+		});
+	});
+	
+	
+	
+	// 조삭제 선택시 
+	$("#groupDelBtn").on("click",function(){
+		$.get("lec_group_del.ajax",{"lec_no":lec_no},function(result){
+			 if(result == 1){
+				 location.reload();
+			 }else if(result == -1){
+				 alert("조가 1개 이하이거나 소속된 수강생이 있습니다.");
+			 }
+		});
+	});
+	
+	
+	// 파일 추가시 
+	$("input[name=excelFileUp]").on("change",function(){
+		var files = $(this).prop('files');
+		var file = files[0];
+		console.log(file);
+		formData.append("excelFile",file);
+		console.log(formData);
+		
+		$.ajax({
+	        url: "excelFileUpload.ajax?lec_no="+lec_no,
+	        processData: false,
+	        contentType: false,
+	        data: formData,
+	        type: 'POST',
+	        success: function(result){
+	        },
+	        error:function(){
+	        }
+	    });
+		
+	});
+	
+		
+	
+	//func
+	function goSublist(){
+		location.href = "lec_list_sub.do?lec_no="+lec_no+"&sortOrder1="+sortOrder1;
+	};
+	
+	function setData(){
+		
+		if(flag=='전체'){
+			sortOrder1 = 'all';
+		}else if(flag=='과제'){
+			sortOrder1 = 'A';
+		}else if(flag=='수업'){
+			sortOrder1 = 'B';
+		}else if(flag=='기타'){
+			sortOrder1 = 'C';
+		}else{
+			sortOrder1 = flag.replace(/[^0-9]/g,"");
+		}
+				
+		data = {"lec_no":lec_no,"sortOrder1":sortOrder1};
+	}
+</script>
 </body>
 </html>
+
+
+
+
+
+<!-- end -->

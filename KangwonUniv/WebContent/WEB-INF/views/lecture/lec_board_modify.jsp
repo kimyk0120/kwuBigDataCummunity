@@ -49,6 +49,7 @@ $(document).ready(function(){
     
     function board_save() {
     	var lec_no = $("#lec_no").val();
+    	var lec_board_no = $("#lec_board_no").val();
 		var sub = $('#subject').val();
 		var ttl = $('#title').val();
 		
@@ -67,11 +68,10 @@ $(document).ready(function(){
 			return;
 		} else {
 			if(confirm("저장하시겠습니까?")) {
-				document.mainform2.action = "lec_board_save.do?lec_no="+lec_no;
+				document.mainform2.action = "lec_board_update.do?lec_no="+lec_no+"&lec_board_no="+lec_board_no;
 				document.mainform2.submit(); 
 			}
 		}
-    	
     }
 	    
     function file_add() {
@@ -95,6 +95,16 @@ $(document).ready(function(){
 	    	$('#file_cnt').val(no);
     	}
     }
+    
+    function file_del(no, no2) {
+    	alert("no : " + no + ";  no2 : " + no2);
+    	$("span#file-span"+no2).remove();
+    	
+    	var del = $('#file_del_no').val();
+    	del += ","+no;
+    	$('#file_del_no').val(del);
+    	
+    }
     </script>
 </head>
 <body>
@@ -102,22 +112,16 @@ $(document).ready(function(){
 <jsp:include page="../main/top_menu.jsp"  />
 
 <form id="mainform2" name="mainform2" method="post" enctype="multipart/form-data">
-<input type="hidden" id="subject" name="subject" />
+<input type="hidden" id="subject" name="subject" value="${info.lec_board_prt}"/>
 <input type="hidden" id="file_cnt" name="file_cnt" value="1"/>
 <input type="hidden" id="lec_no"  value="${lec_no}"/>
 <input type="hidden" id="lec_board_no"  value="${lec_board_no}"/>
 
 	<div class="container-fluid snz-page-content-container">
     	<div class="row snz-page-content snz-page-write">
-
         <div class="snz-write-section">
-
-            <div class="write-title">
-                <h1>글 등록</h1>
-            </div>
-
+            <div class="write-title"><h1>글 등록</h1></div>
             <div class="write-select-info">
-                
                     <div class="enter-category">
                         <label for="">카테고리</label>
                         <div class="dropdown">
@@ -196,23 +200,19 @@ $(document).ready(function(){
                     <a href="javascript:board_save()"><input type="button" class="btn btn-primary" value="등록"/></a>
                     <input type="button" class="btn btn-default" value="취소"/>
                 </div>
+                
             </div>
-
         </div>
-
     </div>
 </div>
 </form>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="common/lib/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 <script src="https://use.fontawesome.com/f0cba26d23.js"></script>
 <script src="common/js/script.js"></script>
 <script src="common/js/jquery.caret.min.js"></script>
- <script src="common/js/jquery.tag-editor.js"></script>
-
-
+<script src="common/js/jquery.tag-editor.js"></script>
 <script>
         // jQuery UI autocomplete extension - suggest labels may contain HTML tags
         // github.com/scottgonzalez/jquery-ui-extensions/blob/master/src/autocomplete/jquery.ui.autocomplete.html.js
@@ -263,6 +263,5 @@ nhn.husky.EZCreator.createInIFrame({
 });
 
 </script>
-
 </body>
 </html>

@@ -44,7 +44,23 @@ public interface LectureMapper {
 
 	public ArrayList<LectureVo> info_repl_list(int lec_board_no) throws Exception;
 
-	public void info_repl_insert(LectureVo lvo) throws Exception; 
+	public void info_repl_insert(LectureVo lvo) throws Exception;
+
+	public void info_file_delete(LectureVo lvo) throws Exception;
+
+	public int info_update(LectureVo lvo) throws Exception;
+
+	public ArrayList<LectureVo> select_lec_group_student(LectureVo lvo) throws Exception;
+
+	public void stu_group_update(LectureVo lvo) throws Exception;
+
+	public int select_max_group_no(LectureVo lvo) throws Exception;
+
+	public void insert_group_no(LectureVo lvo) throws Exception;
+
+	public int select_group_belong_cnt(LectureVo lvo) throws Exception;
+
+	public void delete_group_no(LectureVo lvo) throws Exception;
+
 	
-	
-}
+}//.class

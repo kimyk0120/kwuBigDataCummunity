@@ -11,7 +11,7 @@ public class LectureVo {
 	int subPageSize = 5;
 	int currentPage = 0;
 	
-	
+	private String name = "";
 	
 	private int lec_board_file_no;
 	private int lec_reply_no;
@@ -68,13 +68,58 @@ public class LectureVo {
 	private String org_file_nm = "";
 	private String file_path = "";
 	
-
-	// getter , setter
+	private String[] file_nos			= null;
+	
+	private String arrOrder = "";
 	
 	
+	
+	
+	/**
+	 * getter setter
+	 * @return
+	/**
+	 * 
+	 */
 	
 	public String getLikeYn() {
 		return likeYn;
+	}
+
+
+
+	public String getArrOrder() {
+		return arrOrder;
+	}
+
+
+
+	public void setArrOrder(String arrOrder) {
+		this.arrOrder = arrOrder;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public String[] getFile_nos() {
+		return file_nos;
+	}
+
+
+
+	public void setFile_nos(String[] file_nos) {
+		this.file_nos = file_nos;
 	}
 
 

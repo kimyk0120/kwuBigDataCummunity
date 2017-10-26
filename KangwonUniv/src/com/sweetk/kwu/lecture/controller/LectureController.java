@@ -1,16 +1,14 @@
 package com.sweetk.kwu.lecture.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.FileInputStream;
 import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +16,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -29,8 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sweetk.kwu.data.mapper.DataMapper;
-import com.sweetk.kwu.data.vo.DataVo;
 import com.sweetk.kwu.lecture.mapper.LectureMapper;
 import com.sweetk.kwu.lecture.vo.LectureVo;
 
@@ -203,7 +203,7 @@ public class LectureController {
 		mav.addObject("lec_plan",lecPlan);
 		return mav;
     	
-    }//.lecList
+    }
 
     
     /**
@@ -243,6 +243,7 @@ public class LectureController {
     	mav.addObject("grouplist",grouplist);
     	mav.addObject("boardList",boardList);
     	mav.addObject("pageNum",lvo.getCurrentPage());
+    	mav.addObject("initSortOrder",lvo.getSortOrder1());
     	
     	return mav;
     }
@@ -471,6 +472,242 @@ public class LectureController {
     	}
     	return mav;
     }
+    
+    
+    
+    @RequestMapping("/lec_board_update.do")
+    protected void lec_board_update(LectureVo lvo, HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws Exception {
+    	
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	
+    	String strSaveDir = "/files/board/";
+    	
+    	String savePath = req.getRealPath(strSaveDir); 
+		
+		File targetDir = null;
+		targetDir = new File(savePath);
+		if(!targetDir.isDirectory()){
+			targetDir.mkdirs();
+		}
+		
+		int sizeLimit = 100 * 1024 * 1024 / 2; 
+		String encType = "UTF-8"; 
+				
+		MultipartRequest multi = new MultipartRequest(req, savePath, sizeLimit, encType, new DefaultFileRenamePolicy());
+		
+		Enumeration formNames = multi.getFileNames();
+    	
+    	try {
+    		
+    		String subj = (String)multi.getParameter("subject");
+			String ttl = (String)multi.getParameter("title");
+			String cnt = (String)multi.getParameter("cntn");
+			String tg = (String)multi.getParameter("tags");
+			String fCnt = (String)multi.getParameter("file_cnt");
+
+			String dNo = (String)multi.getParameter("file_del_no");
+			
+			System.out.println("dNo : " + dNo);
+			
+			if(!"".equals(dNo) && dNo != null) {
+				dNo = dNo.substring(1);
+				String[] tmp = dNo.split(",");
+			    lvo.setFile_nos(tmp);
+			    
+			    mapper.info_file_delete(lvo);
+			}
+			
+			lvo.setLec_board_prt(subj);
+			lvo.setTitle(ttl);
+			lvo.setCntn(cnt);
+			lvo.setTag(tg);
+			lvo.setId(session.getAttribute("UserId").toString());
+			
+			int a = mapper.info_update(lvo);
+			
+			
+			String fileName = "";
+			String newFile = "";
+
+			for(int i=0; i < Integer.parseInt(fCnt); i++) {
+			
+					fileName = multi.getFilesystemName("uploadBtn"+(i+1));
+					String OfileName = multi.getOriginalFileName("uploadBtn"+(i+1));
+					
+					System.out.println("fileName : " + fileName);
+					System.out.println("OfileName : " + OfileName);
+					
+					if(!"".equals(fileName) && fileName != null) {
+					
+						newFile = new SimpleDateFormat("yyyyMMddHmsS").format(new Date());
+						int index = fileName.indexOf(".");
+						String filename1 = fileName.substring(index, fileName.length());// .확장자만 남기고 다 삭제
+						newFile = newFile + filename1;
+			
+						File file=new File(savePath+"/"+fileName); //원본파일부르기
+						file.renameTo(new File(savePath+"/"+newFile)); //파일이름변경
+						
+						lvo.setFile_nm(newFile);
+						lvo.setOrg_file_nm(fileName);
+						
+						mapper.info_file_insert(lvo);
+					}
+			}
+			
+    	} catch(Exception e){
+    		e.printStackTrace();
+    	}
+      	
+    	resp.sendRedirect("/lec_board_detail.do?lec_no="+lvo.getLec_no()+"&lec_board_no="+lvo.getLec_board_no());
+    }
+    
+    
+    @RequestMapping(value="/lec_stu.do", method = {RequestMethod.GET})
+    protected ModelAndView lec_stu(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	ModelAndView mav = new ModelAndView("/lecture/lec_stu");
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	lvo.setId(session.getAttribute("UserId").toString());
+    	
+    	String lecTitle = mapper.select_lec_title(lvo);
+    	ArrayList<LectureVo> grouplist = mapper.select_lec_group(lvo);
+    	ArrayList<LectureVo> studentList = mapper.select_lec_group_student(lvo);
+    	
+    	mav.addObject("lecTitle",lecTitle);
+    	mav.addObject("lec_no",lvo.getLec_no());
+    	mav.addObject("grouplist",grouplist);
+    	mav.addObject("studentList",studentList);
+    	
+		return mav;
+    }
+    
+    
+    @RequestMapping(value="/lec_stu.ajax", method = {RequestMethod.GET})
+    protected ModelAndView lec_stu_ajax(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	ModelAndView mav = new ModelAndView("/lecture/lec_stu_temp");
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	lvo.setId(session.getAttribute("UserId").toString());
+    	
+    	ArrayList<LectureVo> grouplist = mapper.select_lec_group(lvo);
+    	ArrayList<LectureVo> studentList = mapper.select_lec_group_student(lvo);
+    	
+    	mav.addObject("grouplist",grouplist);
+    	mav.addObject("studentList",studentList);
+    	
+		return mav;
+    }
+
+    
+    @RequestMapping(value="/stu_group_update.ajax", method = {RequestMethod.GET})
+    protected void stu_group_update(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	mapper.stu_group_update(lvo);
+    }
+
+    @RequestMapping(value="/lec_group_add.ajax", method = {RequestMethod.GET})
+    protected void lec_group_add(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	PrintWriter out = response.getWriter();
+    	
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	
+    	try {
+    		int max = mapper.select_max_group_no(lvo); 
+//        	System.out.println(max);		
+    	    if(max >= 5){
+    	    	out.println("-1");
+    	    }else{
+    	    	lvo.setGroup_no(max+1);
+    	    	mapper.insert_group_no(lvo); 
+    	    	out.println("1");
+    	    }
+		} catch (Exception e) {
+			out.print("0");
+		}finally {
+			out.close();
+		}
+    }
+
+    @RequestMapping(value="/lec_group_del.ajax", method = {RequestMethod.GET})
+    protected void lec_group_del(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	PrintWriter out = response.getWriter();
+    	
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	
+    	try {
+    		
+    		int max = mapper.select_max_group_no(lvo); 
+    		lvo.setGroup_no(max);
+    		
+    		int belongCnt = mapper.select_group_belong_cnt(lvo);
+        	System.out.println(belongCnt);		
+    		
+    		if(belongCnt <= 0 && max > 1){
+    			out.println("1");
+     			mapper.delete_group_no(lvo); 
+    		}else{
+    			out.println("-1");
+    		}
+    	} catch (Exception e) {
+    		out.print("0");
+    	}finally {
+    		out.close();
+    	}
+    }
+    
+    
+    @RequestMapping(value = "/excelFileUpload.ajax", method = {RequestMethod.POST,RequestMethod.GET}) 
+	protected void excelFileUpload(LectureVo lvo,HttpSession session, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		
+    	System.out.println("lvo.getLec_no() : " + lvo.getLec_no());
+		LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+		
+		String savePath =  req.getServletContext().getRealPath("uploadFiles");  // FIXME
+		
+		System.out.println("savePath :" + savePath);
+		
+		int sizeLimit = 1024*1024*15; 
+		String encType = "utf-8"; 
+		MultipartRequest multi = new MultipartRequest(req, savePath, sizeLimit, encType, new DefaultFileRenamePolicy());
+		Enumeration formNames = multi.getFileNames(); 		
+		
+		String formName = (String) formNames.nextElement(); 
+        String fileName = multi.getFilesystemName(formName);
+	    String OfileName = multi.getOriginalFileName(formName);
+	    
+	    System.out.println("formName : " + formName);
+	    System.out.println("fileName : " +fileName); 
+	    System.out.println("OrifileName : " +OfileName); 
+	    		
+	    if (fileName != null) {
+	         File mFile = multi.getFile(formName);
+	         long filesize = mFile.length();
+	         System.out.println("filesize : "+ filesize);
+	    }
+	    
+	    
+	    FileInputStream file = new FileInputStream(new File(savePath+"/"+fileName));
+	    XSSFWorkbook workbook = new XSSFWorkbook(file);
+	    XSSFSheet sheet = workbook.getSheetAt(0);
+	    Iterator<Row> rowIterator = sheet.iterator();
+	    rowIterator.next();
+	    int cnt=0;
+	    
+	    
+	    
+	    
+	}//.fileUpload
+    
+    
+    
     
 	
 }//.class

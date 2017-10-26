@@ -186,6 +186,66 @@
 		VALUES (#{lec_board_no}, #{repl_cntn}, #{id}, now(), 'N')
 	</insert>
 	
+	<delete id="info_file_delete" parameterType="LectureVo">
+		DELETE FROM lec_board_file
+		WHERE
+			file_no  IN ( 
+				<foreach item="item" index="index" collection="file_nos" separator=",">#{item}</foreach>
+		 		)
+	
+	</delete>
+	
+	<update id="info_update" parameterType="LectureVo">
+		UPDATE lec_board 
+		SET lec_board_prt = #{lec_board_prt}, 
+			title = #{title}, 
+			cntn = #{cntn}, 
+			tag = #{tag}
+		WHERE
+			lec_board_no = #{lec_board_no}
+	</update>
+
+	
+	<select id="select_lec_group_student" parameterType="LectureVo" resultType="LectureVo">
+		SELECT
+			LEC_NO, a.ID, GROUP_NO,EMAIL, MEM_PRT, NAME, IMG_NM, IMG_ORG_NM, AGREE_YN
+		FROM
+			lec_stdt a
+		JOIN member b on a.id = b.id     
+		WHERE
+			a.lec_no = ${lec_no}
+		<if test='sortOrder2 != null and sortOrder2 != ""'>
+			and GROUP_NO = ${sortOrder2}
+		</if>
+	</select>
+	
+	<update id="stu_group_update" parameterType="LectureVo">
+		UPDATE lec_stdt 
+		SET GROUP_NO = #{arrOrder}
+		WHERE
+			lec_no = #{lec_no} and id = '${id}'
+	</update>
+
+	<insert id="insert_group_no" parameterType="LectureVo">
+		INSERT INTO lec_group (LEC_NO, GROUP_NO)
+		VALUES (#{lec_no}, #{group_no})
+	</insert>
+	
+	<select id="select_max_group_no" parameterType="LectureVo" resultType="int"> 
+		SELECT max(GROUP_NO) FROM kwu.lec_group
+	</select>	
+
+	<select id="select_group_belong_cnt" parameterType="LectureVo" resultType="int"> 
+		SELECT count(GROUP_NO) 
+		FROM lec_stdt
+		where GROUP_NO = ${group_no}
+	</select>	
+	
+	
+	<delete id="delete_group_no" parameterType="LectureVo">
+		DELETE FROM lec_group WHERE lec_no = #{lec_no} AND GROUP_NO = #{group_no} 
+	</delete>
+	
 </mapper>
 
 

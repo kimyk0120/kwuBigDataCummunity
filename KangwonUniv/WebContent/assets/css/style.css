@@ -155,6 +155,11 @@ textarea::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:e
 textarea::-webkit-scrollbar-track {background: #efefef; -webkit-border-radius: 10px; border-radius:10px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.2)}
 textarea::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0,0,0,.2); -webkit-border-radius: 8px; border-radius: 8px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.1)}
 
+
+#stuEditBtn{
+	margin-left: 2em;
+}
+
 /* Main */
 .snz-main-container {
     background: #edf0f6 url("../../assets/img/main/group-2.png");
@@ -1796,6 +1801,14 @@ table .dropdown .dropdown-menu {
     width: 216px;
     padding: 3px 10px;
 }
+
+
+/* 앞으로 추가할 css */
+
+
+
+
+
 
 /*Media Query*/
 @media (max-width: 767px) {
