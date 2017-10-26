@@ -34,7 +34,17 @@ public interface LectureMapper {
 
 	public int info_insert(LectureVo lvo) throws Exception;
 
-	public void info_file_insert(LectureVo lvo) throws Exception; 
+	public void info_file_insert(LectureVo lvo) throws Exception;
+
+	public void update_view_count(LectureVo lvo) throws Exception;
+
+	public LectureVo lec_board_detail(LectureVo lvo) throws Exception;
+
+	public ArrayList<LectureVo> info_file_list(int lec_board_no) throws Exception;
+
+	public ArrayList<LectureVo> info_repl_list(int lec_board_no) throws Exception;
+
+	public void info_repl_insert(LectureVo lvo) throws Exception; 
 	
 	
 }

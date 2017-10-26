@@ -13,7 +13,7 @@
 	                </div>
 	                <div class="item-desc">
 	                    <div class="item-title">
-	                        <a href="/page/info_detail"><span>${bl.title}</span></a>
+	                        <a class="boardDetailBtn"><span>${bl.title}</span></a>
 	                        <span class="item-desc-inner-cate-up">
 	                        <c:choose>
 								<c:when test="${bl.lec_board_prt eq 'A' }">과제</c:when>	                        

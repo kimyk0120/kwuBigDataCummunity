@@ -401,6 +401,82 @@ public class LectureController {
     }
     
     
+    @RequestMapping(value="/lec_board_detail.do", method = {RequestMethod.GET})
+    protected ModelAndView lec_board_detail(LectureVo lvo,HttpServletRequest req, HttpSession session, HttpServletResponse response) throws Exception {
+    	
+    	System.out.println(req.getQueryString());
+    	ModelAndView mav = new ModelAndView("/lecture/lec_board_detail");
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
 
+    	lvo.setId(session.getAttribute("UserId").toString());
+
+    	mapper.update_view_count(lvo);
+    	LectureVo info = mapper.lec_board_detail(lvo);
+    	
+		
+		ArrayList<LectureVo> list = mapper.info_file_list(lvo.getLec_board_no());
+		ArrayList<LectureVo> r_list = mapper.info_repl_list(lvo.getLec_board_no());
+    	
+    	
+    	mav.addObject("lec_no",lvo.getLec_no());
+    	mav.addObject("lec_board_no",lvo.getLec_board_no());
+    	mav.addObject("info",info);
+		mav.addObject("f_list", list);
+		mav.addObject("r_list", r_list);
+    	
+    	return mav;
+    }
+    
+    @RequestMapping(value = "/lec_board_repl_save.ajax", method = {RequestMethod.POST, RequestMethod.GET})
+    protected ModelAndView lec_board_repl_save(LectureVo lvo, HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws Exception {
+    	
+    	System.out.println(lvo.toString());
+    	
+    	ModelAndView mav = new ModelAndView("/lecture/lec_board_reply_append");
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	
+    	try {
+    		lvo.setId(session.getAttribute("UserId").toString());
+    		mapper.info_repl_insert(lvo);
+    		
+    		ArrayList<LectureVo> r_list = mapper.info_repl_list(lvo.getLec_board_no());
+    		mav.addObject("list", r_list);
+    		
+    	} catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	return mav;
+    }
+    
+    
+    @RequestMapping("/lec_board_edit.do")
+    protected ModelAndView lec_board_edit(LectureVo lvo, HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws Exception {
+    	
+    	ModelAndView mav = new ModelAndView("/lecture/lec_board_modify");
+    	LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
+    	try {
+
+    		LectureVo info = mapper.lec_board_detail(lvo);
+    		ArrayList<LectureVo> list = mapper.info_file_list(lvo.getLec_board_no());
+    		ArrayList<LectureVo> grouplist = mapper.select_lec_group(lvo);
+
+			mav.addObject("info", info);
+			mav.addObject("f_list", list);
+			mav.addObject("lec_no",lvo.getLec_no());
+			mav.addObject("lec_board_no",lvo.getLec_board_no());
+			mav.addObject("grouplist",grouplist);
+    	} catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	return mav;
+    }
+    
 	
 }//.class
+
+
+
+
+
+//end

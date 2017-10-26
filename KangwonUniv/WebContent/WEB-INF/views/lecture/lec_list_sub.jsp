@@ -83,7 +83,7 @@
 	                </div>
 	                <div class="item-desc">
 	                    <div class="item-title">
-	                        <a href="/page/info_detail"><span>${bl.title}</span></a>
+	                        <a class="boardDetailBtn"><span>${bl.title}</span></a>
 	                        <span class="item-desc-inner-cate-up">
 	                        <c:choose>
 								<c:when test="${bl.lec_board_prt eq 'A' }">과제</c:when>	                        
@@ -227,7 +227,17 @@
 	$("#lecBoardRegBtn").on("click",function(){
 		location.href = "lec_board_create.do?lec_no="+lec_no;
 	});
+	
+	
+	// 게시글 상세 - 상세 페이지로 이동
+	$(document).on("click",".boardDetailBtn",function(){
+		//lec_no
+		lecBoardNo = $(this).parents(".listUnit").attr("data-lecBoardNo");
+		console.log("lec_no : " + lec_no);
+		console.log("lecBoardNo : " + lecBoardNo);
 		
+		location.href = "lec_board_detail.do?lec_no="+lec_no+"&lec_board_no="+lecBoardNo; 
+	})	
 	
 	//func
 	function listAjaxToHtml(){

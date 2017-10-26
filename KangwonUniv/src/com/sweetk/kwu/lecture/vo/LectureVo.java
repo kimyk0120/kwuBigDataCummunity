@@ -4,11 +4,22 @@ public class LectureVo {
 	
 	//LEC_NO, ID, LEC_TITLE, LEC_CORS, LEC_PLAN, START_DT, END_DT, YEAR, GRADE, TERM, REG_ID, REG_DT, DEL_YN
 	//LEC_BOARD_NO, LEC_NO, LEC_BOARD_PRT, TITLE, CNTN, TAG, LIKE_CNT, CNT, REG_ID, REG_DT, DEL_YN
-	
+	//LEC_BOARD_FILE_NO, LEC_BOARD_NO, FILE_NM, FILE_PATH
+	//LEC_REPLY_NO, LEC_BOARD_NO, CNTN, REG_ID, REG_DT, DEL_YN
 	
 	int pageSize = 10;
 	int subPageSize = 5;
 	int currentPage = 0;
+	
+	
+	
+	private int lec_board_file_no;
+	private int lec_reply_no;
+	private String repl_cntn = "";
+	
+	private String repl_reg_id = ""; 
+	private String repl_reg_dt = ""; 
+	
 	
 	private String sortOrder1 = "";
 	private String sortOrder2 = "";
@@ -55,7 +66,7 @@ public class LectureVo {
 	
 	private String file_nm = "";
 	private String org_file_nm = "";
-
+	private String file_path = "";
 	
 
 	// getter , setter
@@ -64,6 +75,78 @@ public class LectureVo {
 	
 	public String getLikeYn() {
 		return likeYn;
+	}
+
+
+
+	public int getLec_reply_no() {
+		return lec_reply_no;
+	}
+
+
+
+	public void setLec_reply_no(int lec_reply_no) {
+		this.lec_reply_no = lec_reply_no;
+	}
+
+
+
+	public String getRepl_cntn() {
+		return repl_cntn;
+	}
+
+
+
+	public void setRepl_cntn(String repl_cntn) {
+		this.repl_cntn = repl_cntn;
+	}
+
+
+
+	public String getRepl_reg_id() {
+		return repl_reg_id;
+	}
+
+
+
+	public void setRepl_reg_id(String repl_reg_id) {
+		this.repl_reg_id = repl_reg_id;
+	}
+
+
+
+	public String getRepl_reg_dt() {
+		return repl_reg_dt;
+	}
+
+
+
+	public void setRepl_reg_dt(String repl_reg_dt) {
+		this.repl_reg_dt = repl_reg_dt;
+	}
+
+
+
+	public int getLec_board_file_no() {
+		return lec_board_file_no;
+	}
+
+
+
+	public void setLec_board_file_no(int lec_board_file_no) {
+		this.lec_board_file_no = lec_board_file_no;
+	}
+
+
+
+	public String getFile_path() {
+		return file_path;
+	}
+
+
+
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
 	}
 
 
@@ -412,22 +495,24 @@ public class LectureVo {
 	@Override
 	public String toString() {
 		return "LectureVo [pageSize=" + pageSize + ", subPageSize=" + subPageSize + ", currentPage=" + currentPage
-				+ ", sortOrder1=" + sortOrder1 + ", sortOrder2=" + sortOrder2 + ", likeYn=" + likeYn + ", lec_board_no="
-				+ lec_board_no + ", lec_board_prt=" + lec_board_prt + ", title=" + title + ", tag=" + tag
-				+ ", like_cnt=" + like_cnt + ", cnt=" + cnt + ", lec_no=" + lec_no + ", id=" + id + ", lec_title="
+				+ ", lec_board_file_no=" + lec_board_file_no + ", lec_reply_no=" + lec_reply_no + ", repl_cntn="
+				+ repl_cntn + ", repl_reg_id=" + repl_reg_id + ", repl_reg_dt=" + repl_reg_dt + ", sortOrder1="
+				+ sortOrder1 + ", sortOrder2=" + sortOrder2 + ", sortOrder3=" + sortOrder3 + ", likeYn=" + likeYn
+				+ ", lec_board_no=" + lec_board_no + ", lec_board_prt=" + lec_board_prt + ", title=" + title + ", tag="
+				+ tag + ", like_cnt=" + like_cnt + ", cnt=" + cnt + ", lec_no=" + lec_no + ", id=" + id + ", lec_title="
 				+ lec_title + ", lec_cors=" + lec_cors + ", lec_plan=" + lec_plan + ", start_dt=" + start_dt
 				+ ", end_dt=" + end_dt + ", year=" + year + ", grade=" + grade + ", term=" + term + ", reg_id=" + reg_id
 				+ ", reg_dt=" + reg_dt + ", del_yn=" + del_yn + ", stdtcnt=" + stdtcnt + ", attndYn=" + attndYn
 				+ ", loginId=" + loginId + ", selectSemester=" + selectSemester + ", selectYear=" + selectYear
 				+ ", isMine=" + isMine + ", selectGrade=" + selectGrade + ", lecTitle=" + lecTitle + ", lecProc="
-				+ lecProc + ", cntn=" + cntn + ", group_no=" + group_no + "]";
+				+ lecProc + ", cntn=" + cntn + ", group_no=" + group_no + ", file_nm=" + file_nm + ", org_file_nm="
+				+ org_file_nm + ", file_path=" + file_path + "]";
 	}
 
 
 
 	
-		
-	
+
 	
 	
 	

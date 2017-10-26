@@ -47,6 +47,7 @@
 		FROM
 			lecture		
 	</select>
+	
 
 	<select id="select_lec_plan" parameterType="LectureVo" resultType="String">	
 		SELECT
@@ -128,6 +129,14 @@
 		lec_board_no = #{lec_board_no}
 	</update>
 	
+
+	<update id="update_view_count" parameterType="LectureVo">
+		UPDATE lec_board 
+		SET CNT = CNT + 1
+		WHERE
+		lec_board_no = #{lec_board_no} and lec_no = #{lec_no}   
+	</update>
+	
 	
 	<insert id="info_insert" parameterType="LectureVo">
 		insert into lec_board (LEC_NO, LEC_BOARD_PRT, TITLE, CNTN, TAG, LIKE_CNT, CNT, REG_ID, REG_DT, DEL_YN)
@@ -144,6 +153,38 @@
 		VALUES (#{lec_board_no}, #{file_nm})
 	</insert>
 	
+	<select id="lec_board_detail"  parameterType="LectureVo" resultType="LectureVo">	
+		SELECT
+			LEC_BOARD_NO, LEC_NO, LEC_BOARD_PRT, TITLE, CNTN, TAG, LIKE_CNT, CNT, REG_ID, REG_DT, DEL_YN
+		FROM
+			lec_board		
+		WHERE
+		lec_board_no = #{lec_board_no} and lec_no = #{lec_no}   			
+	</select>
+
+	<select id="info_file_list"  parameterType="LectureVo" resultType="LectureVo">	
+		SELECT
+			LEC_BOARD_FILE_NO, LEC_BOARD_NO, FILE_NM, FILE_PATH
+		FROM
+			lec_board_file
+		WHERE
+			LEC_BOARD_NO = #{lec_board_no}   			
+	</select>
+	
+	<select id="info_repl_list" parameterType="LectureVo" resultType="LectureVo">
+		SELECT
+			LEC_REPLY_NO, LEC_BOARD_NO, CNTN as repl_cntn, REG_ID as repl_reg_id, REG_DT as repl_reg_dt, DEL_YN
+		FROM
+			lec_board_reply
+		WHERE
+			LEC_BOARD_NO = #{lec_board_no}
+		ORDER BY LEC_REPLY_NO desc
+	</select>
+	
+	<insert id="info_repl_insert" parameterType="LectureVo" >
+		INSERT INTO lec_board_reply (LEC_BOARD_NO, CNTN, REG_ID, REG_DT, DEL_YN)
+		VALUES (#{lec_board_no}, #{repl_cntn}, #{id}, now(), 'N')
+	</insert>
 	
 </mapper>
 
