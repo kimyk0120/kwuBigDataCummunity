@@ -222,6 +222,7 @@
 	        data: formData,
 	        type: 'POST',
 	        success: function(result){
+	        	 alert("등록이 완료되었습니다.");
 	        	 location.reload();
 	        },
 	        error:function(){
