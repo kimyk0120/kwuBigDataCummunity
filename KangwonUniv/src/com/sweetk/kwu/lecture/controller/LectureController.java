@@ -732,8 +732,7 @@ public class LectureController {
 	             mapper.insert_excel_group(lvo);
 	             
 	             
-	             // TODO 해당 아이디? 이메일로 메일전송
-	             //ctgs@daum.net",
+	             // FIXME 해당 아이디? 이메일로 메일전송
 	             Email("master@kcti.co.kr",id,"test","test");
 	         }
 	    }
