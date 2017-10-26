@@ -73,7 +73,9 @@ public class LectureVo {
 	private String arrOrder = "";
 	
 	
+	private String tempPw = "";
 	
+	private String mem_prt = "";
 	
 	/**
 	 * getter setter
@@ -84,6 +86,30 @@ public class LectureVo {
 	
 	public String getLikeYn() {
 		return likeYn;
+	}
+
+
+
+	public String getMem_prt() {
+		return mem_prt;
+	}
+
+
+
+	public void setMem_prt(String mem_prt) {
+		this.mem_prt = mem_prt;
+	}
+
+
+
+	public String getTempPw() {
+		return tempPw;
+	}
+
+
+
+	public void setTempPw(String tempPw) {
+		this.tempPw = tempPw;
 	}
 
 

@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -670,7 +671,7 @@ public class LectureController {
     	System.out.println("lvo.getLec_no() : " + lvo.getLec_no());
 		LectureMapper mapper = sqlSession.getMapper(LectureMapper.class);
 		
-		String savePath =  req.getServletContext().getRealPath("uploadFiles");  // FIXME
+		String savePath =  req.getServletContext().getRealPath("files");  
 		
 		System.out.println("savePath :" + savePath);
 		
@@ -693,80 +694,54 @@ public class LectureController {
 	         System.out.println("filesize : "+ filesize);
 	    }
 	    
-	    int cnt=0;
+	    int cnt=0; // 인서트한 학생 숫자 	    
 	    
 	    FileInputStream file = new FileInputStream(new File(savePath+"/"+fileName));
 	    XSSFWorkbook workbook = new XSSFWorkbook(file);
 	    XSSFSheet sheet = workbook.getSheetAt(0);
 	    Iterator<Row> rowIterator = sheet.iterator();
-	    rowIterator.next();
-	    
-	    
       
-//		    while(rowIterator.hasNext()) {
-//	          Row row = rowIterator.next();
-//	          Iterator<Cell> cellIterator = row.cellIterator();
-//	
-//	            
-//	         if(row != null && row.getCell(0) != null){
-//	       
-//	             String inputYyyy=row.getCell(0).getStringCellValue();
-//	             String bsnsCd=row.getCell(1).getStringCellValue();
-//	             String dpCd=row.getCell(2).getStringCellValue();
-//	             String d_seq=row.getCell(4).getStringCellValue();
-//	             String expl = "";
-//	             
-//	             if(row.getCell(7) != null) {
-//	                int a = row.getCell(7).getCellType();
-//	                
-//	                if(a == 0 || a == 2) {
-//	                   expl = ""+row.getCell(7).getNumericCellValue();
-//	                }
-//	                else {
-//	                   expl = row.getCell(7).getStringCellValue();
-//	                }
-//	             }
-//	         }
-//	    }
+	    while(rowIterator.hasNext()) {
+	    	Row row = rowIterator.next();
+	        if(row != null && row.getCell(0) != null){
+	       
+	             String id = row.getCell(0).getStringCellValue();
+	             String name = row.getCell(1).getStringCellValue();
+	             
+	             System.out.println("id : " + id);
+	             System.out.println("name : " + name);
+	             
+	             // member 테이블에 값이 없으면  1,비번 생성 2,조에 디폴트로  1조로 하고 회원구분 2(학생)  insert
+	             lvo.setId(id);
+	             lvo.setName(name);
+	             lvo.setTempPw(temporaryPassword(8));
+	             lvo.setGroup_no(1);
+	             lvo.setMem_prt("2");
+	             
+	             mapper.insert_excel_stu(lvo);
+	             mapper.insert_excel_group(lvo);
+	             
+	             
+	             // TODO 해당 아이디? 이메일로 메일전송
+	             
+	             
+	         }
+	    }
 	    
 	}//.fileUpload
     
-
-//           
-//           while(rowIterator.hasNext()) {
-//               Row row = rowIterator.next();
-//               Iterator<Cell> cellIterator = row.cellIterator();
-//
-//                 
-//              if(row != null && row.getCell(0) != null){
-//            
-//                  String inputYyyy=row.getCell(0).getStringCellValue();
-//                  String bsnsCd=row.getCell(1).getStringCellValue();
-//                  String dpCd=row.getCell(2).getStringCellValue();
-//                  String d_seq=row.getCell(4).getStringCellValue();
-//                  String expl = "";
-//                  
-//                  if(row.getCell(7) != null) {
-//                     int a = row.getCell(7).getCellType();
-//                     
-//                     if(a == 0 || a == 2) {
-//                        expl = ""+row.getCell(7).getNumericCellValue();
-//                     }
-//                     else {
-//                        expl = row.getCell(7).getStringCellValue();
-//                     }
-//                  }
-//                  
-//                 dvo.setAPPR_YYYY(inputYyyy);
-//                 dvo.setBSNS_NO(bsnsCd);
-//                 dvo.setDTPT_CODE(dpCd);
-//                 dvo.setDTPT_SEQ(d_seq);
-//                 dvo.setEXPL(expl);
-//                  
-//                 mapper.scribe_dtl_act(dvo);
-//                 
-//            
     
+    
+    // 임시 비밀번호 생성
+    public static String temporaryPassword(int size) {
+    	StringBuffer buffer = new StringBuffer();
+    	Random random = new Random();
+    	String chars[] = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9".split(",");
+    	for (int i = 0; i < size; i++) {
+    		buffer.append(chars[random.nextInt(chars.length)]);
+    	}
+    	return buffer.toString();
+	}
     
     
 	

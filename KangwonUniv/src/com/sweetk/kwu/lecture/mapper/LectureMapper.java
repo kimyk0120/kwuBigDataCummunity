@@ -62,5 +62,9 @@ public interface LectureMapper {
 
 	public void delete_group_no(LectureVo lvo) throws Exception;
 
+	public void insert_excel_stu(LectureVo lvo) throws Exception;
+
+	public void insert_excel_group(LectureVo lvo) throws Exception;
+
 	
 }//.class

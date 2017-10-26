@@ -230,7 +230,7 @@
 		INSERT INTO lec_group (LEC_NO, GROUP_NO)
 		VALUES (#{lec_no}, #{group_no})
 	</insert>
-	
+
 	<select id="select_max_group_no" parameterType="LectureVo" resultType="int"> 
 		SELECT max(GROUP_NO) FROM kwu.lec_group
 	</select>	
@@ -245,6 +245,21 @@
 	<delete id="delete_group_no" parameterType="LectureVo">
 		DELETE FROM lec_group WHERE lec_no = #{lec_no} AND GROUP_NO = #{group_no} 
 	</delete>
+	
+	
+	<insert id="insert_excel_stu" parameterType="LectureVo">
+		INSERT INTO member (ID, PASSWORD, EMAIL, MEM_PRT, NAME) 
+		SELECT '${id}','${tempPw}','${id}','${mem_prt}','${name}' 
+		from dual WHERE NOT EXISTS ( 
+			SELECT * FROM member WHERE id = '${id}'  
+			)
+		
+	</insert>
+
+	<insert id="insert_excel_group" parameterType="LectureVo">
+		INSERT INTO lec_stdt (LEC_NO, ID, GROUP_NO)
+		VALUES (#{lec_no},#{id},#{group_no})
+	</insert>
 	
 </mapper>
 
